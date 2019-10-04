@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b beta 20140226 generated parser.
@@ -170,7 +169,7 @@ class CUP$Sintax$actions {
           return CUP$Sintax$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // SENTENCIA ::= Entero Identificador Igual Numero 
+          case 3: // SENTENCIA ::= Entero Identificador Asignacion Numero 
             {
               Object RESULT =null;
 ;

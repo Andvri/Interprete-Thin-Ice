@@ -18,7 +18,7 @@ parser code
 terminal 
     Entero, 
     Si, Sino, Mientras,
-    Igual, Suma, Resta, Multiplicacion, Division,
+    Igual, Suma, Resta, Multiplicacion, Division, Asignacion,
     Parentesis_a, Parentesis_c,
     Llave_a, Llave_c, Programa,
     Identificador,
@@ -31,4 +31,4 @@ start with INICIO;
 
 INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c;
 
-SENTENCIA ::= Entero Identificador | Entero Identificador Igual Numero;
+SENTENCIA ::= Entero Identificador | Entero Identificador Asignacion Numero;
