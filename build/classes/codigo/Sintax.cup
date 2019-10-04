@@ -1,0 +1,35 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal 
+    Entero, 
+    Si, Sino, Mientras,
+    Igual, Suma, Resta, Multiplicacion, Division,
+    Parentesis_a, Parentesis_c,
+    Llave_a, Llave_c, Programa,
+    Identificador,
+    Numero,
+    Asignacion,
+    ERROR;
+
+non terminal INICIO, SENTENCIA;
+
+start with INICIO;
+
+INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c;
+
+SENTENCIA ::= Entero Identificador | Entero Identificador Asignacion Numero;
