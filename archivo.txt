@@ -1,1 +1,1 @@
-mientras
+programa(entero a){}

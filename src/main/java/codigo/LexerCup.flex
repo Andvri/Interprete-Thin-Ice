@@ -31,6 +31,10 @@ mientras { return new Symbol(sym.Mientras, yychar, yyline, yytext()); }
 "-" { return new Symbol(sym.Resta, yychar, yyline, yytext()); }
 "*" { return new Symbol(sym.Multiplicacion, yychar, yyline, yytext());}
 "/" { return new Symbol(sym.Division, yychar, yyline, yytext());}
+"(" { return new Symbol(sym.Parentesis_a, yychar, yyline, yytext());}
+")" { return new Symbol(sym.Parentesis_c, yychar, yyline, yytext());}
+"{" { return new Symbol(sym.Llave_a, yychar, yyline, yytext());}
+"}" { return new Symbol(sym.Llave_c, yychar, yyline, yytext());}
 "programa" { return new Symbol(sym.Programa, yychar, yyline, yytext()); }
 {L}({L}|{D})* { return new Symbol(sym.Identificador, yychar, yyline, yytext()); }
 ("(-"{D}+")")|{D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
