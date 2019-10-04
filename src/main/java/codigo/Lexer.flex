@@ -5,22 +5,24 @@ import static codigo.Tokens.*;
 %type Tokens
 L=[a-zA-Z_]+
 D=[0-9]+
-espacio=[ ,\t,\r,\n]+
+espacio=[ ,\t,\r]+
 %{
     public String lexeme;
 %}
 %%
-int |
-if |
-else |
-while {lexeme=yytext(); return Reservadas;}
+entero { lexeme=yytext(); return Entero;}
+si { lexeme=yytext(); return Si;}
+sino { lexeme=yytext(); return Sino;}
+mientras {lexeme=yytext(); return Mientras;}
 {espacio} {/*Ignore*/}
 "//".* {/*Ignore*/}
-"=" {return Igual;}
-"+" {return Suma;}
-"-" {return Resta;}
-"*" {return Multiplicacion;}
-"/" {return Division;}
+"\n" {return Linea;}
+":=" { lexeme=yytext(); return Igual;}
+"+" { lexeme=yytext(); return Suma;}
+"-" { lexeme=yytext(); return Resta;}
+"*" { lexeme=yytext(); return Multiplicacion;}
+"/" { lexeme=yytext(); return Division;}
+"programa" { lexeme=yytext(); return Programa;}
 {L}({L}|{D})* {lexeme=yytext(); return Identificador;}
 ("(-"{D}+")")|{D}+ {lexeme=yytext(); return Numero;}
  . {return ERROR;}

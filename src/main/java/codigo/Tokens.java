@@ -10,13 +10,18 @@ package codigo;
  * @author kvnsnchz
  */
 public enum Tokens {
-    Reservadas,
+    Entero,
+    Si,
+    Sino,
+    Mientras,
+    Linea,
     Igual,
     Suma,
     Resta,
     Multiplicacion,
     Division,
     Identificador,
+    Programa,
     Numero,
     ERROR
 }
