@@ -38,4 +38,4 @@ mientras { return new Symbol(sym.Mientras, yychar, yyline, yytext()); }
 "programa" { return new Symbol(sym.Programa, yychar, yyline, yytext()); }
 {L}({L}|{D})* { return new Symbol(sym.Identificador, yychar, yyline, yytext()); }
 ("(-"{D}+")")|{D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
- . { return new Symbol(sym.Error, yychar, yyline, yytext()); }
+ . { return new Symbol(sym.ERROR, yychar, yyline, yytext()); }
