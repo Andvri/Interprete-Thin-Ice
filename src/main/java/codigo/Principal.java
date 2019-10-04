@@ -13,9 +13,12 @@ import java.io.File;
  */
 public class Principal {
     
+    public static String proyectPath = System.getProperty("user.dir");
+    
     public static void main(String[] args) {
+        
         System.out.println("Hel");
-        String ruta = "/home/kvnsnchz/Documents/UNET/Semestre 7/Compiladores/Interprete-Thin-Ice/src/main/java/codigo/Lexer.flex";
+        String ruta = Principal.proyectPath + "/src/main/java/codigo/Lexer.flex";
         generarLexer(ruta);
     }
     
