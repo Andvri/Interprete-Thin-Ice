@@ -651,7 +651,7 @@ class LexerCup implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { return new Symbol(sym.Error, yychar, yyline, yytext());
+            { return new Symbol(sym.ERROR, yychar, yyline, yytext());
             } 
             // fall through
           case 19: break;
