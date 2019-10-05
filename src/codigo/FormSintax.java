@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
 import codigo.Sintax;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -24,6 +26,22 @@ public class FormSintax extends javax.swing.JFrame {
      */
     public FormSintax() {
         initComponents();
+        inputText.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                analizar();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                analizar();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                analizar();
+            }
+        });
     }
 
     /**
@@ -138,6 +156,13 @@ public class FormSintax extends javax.swing.JFrame {
 
         inputText.setColumns(20);
         inputText.setRows(5);
+        inputText.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                inputTextInputMethodTextChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(inputText);
 
         txtAnalizarSin.setColumns(20);
@@ -180,6 +205,10 @@ public class FormSintax extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
+        analizar();
+    }//GEN-LAST:event_analizarActionPerformed
+
+    public void analizar() {
         try {
             txtAnalizarLex.setText("");
             txtAnalizarSin.setText("");
@@ -190,7 +219,10 @@ public class FormSintax extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(FormSintax.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_analizarActionPerformed
+    }
+    private void inputTextInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_inputTextInputMethodTextChanged
+        analizar();
+    }//GEN-LAST:event_inputTextInputMethodTextChanged
 
     /**
      * @param args the command line arguments

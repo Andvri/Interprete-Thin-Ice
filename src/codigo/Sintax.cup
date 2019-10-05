@@ -38,16 +38,48 @@ terminal Programa, Corchete_a,Corchete_c,
     Linea,Identificador,
     Numero,ERROR;
 
-non terminal INICIO, SENTENCIA, IN_ROTACION;
+non terminal 
+        INICIO,
+        DECLARACION, 
+        IN_ROTACION, 
+        IN_MOVIMIENTO, 
+        SEGMENTO,
+        OP_ARITMETICA,
+        OP_RELACIONAL,
+        OP_LOGICA,
+        ASIGNACION_ENTERA,
+        ASIGNACION_LOGICA
+        ;
 
 start with INICIO;
 
-INICIO ::= Programa Parentesis_a Parentesis_c Llave_a IN_ROTACION Llave_c;
+INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
 
-SENTENCIA ::= Entero Identificador |
-              Entero Identificador Asignacion Numero;
+DECLARACION ::= ASIGNACION_ENTERA |
+                ASIGNACION_LOGICA;
 
 IN_ROTACION ::= MirarArriba Parentesis_a Parentesis_c |
                 MirarAbajo Parentesis_a Parentesis_c |
                 MirarIzquierda Parentesis_a Parentesis_c |
                 MirarDerecha Parentesis_a Parentesis_c;
+
+OP_ARITMETICA ::= Numero;
+
+OP_RELACIONAL ::= OP_ARITMETICA Menor OP_ARITMETICA |
+                 OP_ARITMETICA Menor_igual OP_ARITMETICA |
+                 OP_ARITMETICA Mayor OP_ARITMETICA |
+                 OP_ARITMETICA Mayor_igual OP_ARITMETICA |
+                 OP_ARITMETICA Igual OP_ARITMETICA |
+                 OP_ARITMETICA Diferencia OP_ARITMETICA;
+
+OP_LOGICA ::= OP_RELACIONAL 
+            | OP_RELACIONAL Y_logico OP_LOGICA
+            | OP_RELACIONAL O_logico OP_LOGICA
+            | Negacion_logica OP_LOGICA;
+
+ASIGNACION_ENTERA ::= Entero Identificador Asignacion OP_ARITMETICA | Entero Identificador;
+ASIGNACION_LOGICA ::= Logico Identificador Asignacion OP_LOGICA | Logico Identificador;
+
+IN_MOVIMIENTO ::= Avanzar Parentesis_a OP_ARITMETICA Parentesis_c;
+
+SEGMENTO ::= | IN_ROTACION SEGMENTO | IN_MOVIMIENTO SEGMENTO | DECLARACION SEGMENTO;
