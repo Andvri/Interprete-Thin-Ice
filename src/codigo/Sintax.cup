@@ -111,7 +111,7 @@ AS_VARIABLE ::= DE_VARIABLE Asignacion OPERACION |
 OPERACION ::= OP_LOGICA;
 ELEMENTO ::= Numero | Identificador | Resta Numero;
 
-FACTOR ::= Parentesis_a OP_LOGICA Parentesis_c | ELEMENTO ;
+FACTOR ::= Parentesis_a OP_LOGICA Parentesis_c | Negacion_logica Parentesis_a OP_LOGICA Parentesis_c | ELEMENTO | Negacion_logica ELEMENTO ;
 OPERADOR_SUMA ::= Suma | Resta;
 OPERADOR_MULT ::= Multiplicacion | Division;
 OP_ARITMETICA ::= OP_ARITMETICA OPERADOR_SUMA TERM | TERM;
