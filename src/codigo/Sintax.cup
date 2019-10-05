@@ -93,6 +93,7 @@ non terminal
         OP2,
         CONDICIONAL_SI,
         CICLO_PARA,
+        CICLO_REPITA_HASTA_QUE,
         FUNCION;
 
 start with INICIO;
@@ -103,7 +104,8 @@ SEGMENTO ::=
         | AS_VARIABLE SEGMENTO
         | FUNCION SEGMENTO
         | CONDICIONAL_SI SEGMENTO
-        | CICLO_PARA SEGMENTO;
+        | CICLO_PARA SEGMENTO
+        | CICLO_REPITA_HASTA_QUE SEGMENTO;
 
 TI_VARIABLE ::= Entero | Logico;
 DE_VARIABLE ::= TI_VARIABLE Identificador 
@@ -142,3 +144,5 @@ CONDICIONAL_SI ::= Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave
                    | Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
 
 CICLO_PARA ::= Para Parentesis_a OP_LOGICA Punto_coma OP_LOGICA Punto_coma OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
+
+CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OP_LOGICA Punto_coma;
