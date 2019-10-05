@@ -1,0 +1,15 @@
+programa () {
+    entero a
+    entero b
+    a := 10
+    b := a + 10
+    logico con
+    con := a <> b Y b <= 30
+
+
+
+    mirarArriba()
+    mirarAbajo()
+    mirarIzquierda()
+    mirarDerecha()
+}
