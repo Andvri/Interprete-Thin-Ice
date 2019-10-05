@@ -33,7 +33,7 @@ terminal
     Si,Sino,
 
     /* Instrucciones de Control */
-    Para,Repita,Hasta,
+    Para,Repita,Hasta,Que,
 
     /* Operación de Asignación */
     Asignacion,
@@ -54,7 +54,7 @@ terminal
     Negacion_logica,
     
     /* Otros */
-    Linea,Identificador,
+    Linea,Identificador, Punto_coma,
     Numero,
     ERROR;
 
@@ -85,7 +85,7 @@ TI_VARIABLE ::= Entero | Logico;
 
 DE_VECTOR ::= TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
 
-OP_ARITMETICA ::= Numero;
+OP_ARITMETICA ::= Numero | Resta Numero;
 
 OP_RELACIONAL ::= OP_ARITMETICA Menor OP_ARITMETICA |
                  OP_ARITMETICA Menor_igual OP_ARITMETICA |

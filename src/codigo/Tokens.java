@@ -29,6 +29,7 @@ public enum Tokens {
     Para,
     Repita,
     Hasta,
+    Que,
     /* Operación de Asignación */
     Asignacion,
     /* Operaciónes Aritmeticas */
@@ -52,5 +53,6 @@ public enum Tokens {
     Linea,
     Identificador,
     Numero,
+    Punto_coma,
     ERROR
 }

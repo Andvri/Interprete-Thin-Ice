@@ -36,6 +36,7 @@ sino { lexeme=yytext(); return Sino;}
 para {lexeme=yytext(); return Para;}
 repita {lexeme=yytext(); return Repita;}
 hasta {lexeme=yytext(); return Hasta;}
+que {lexeme=yytext(); return Que;}
 
 /* Operación de Asignación */
 ":=" { lexeme=yytext(); return Asignacion;}
@@ -62,6 +63,7 @@ hasta {lexeme=yytext(); return Hasta;}
 
 /* Otros */
 {espacio} {/*Ignore*/}
+";" {  lexeme=yytext(); return Punto_coma;}
 "//".* {/*Ignore*/}
 "\n" {return Linea;}
 {L}({L}|{D})* {lexeme=yytext(); return Identificador;}

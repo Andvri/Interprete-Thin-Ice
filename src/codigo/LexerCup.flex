@@ -43,7 +43,7 @@ sino { return new Symbol(sym.Sino, yychar, yyline, yytext());}
 para { return new Symbol(sym.Para, yychar, yyline, yytext());}
 repita { return new Symbol(sym.Repita, yychar, yyline, yytext());}
 hasta { return new Symbol(sym.Hasta, yychar, yyline, yytext());}
-
+que { return new Symbol(sym.Que, yychar, yyline, yytext());}
 /* Operación de Asignación */
 ":=" { return new Symbol(sym.Asignacion, yychar, yyline, yytext());}
 
@@ -69,6 +69,7 @@ hasta { return new Symbol(sym.Hasta, yychar, yyline, yytext());}
 
 /* Otros */
 {espacio} {/*Ignore*/}
+";" { return new Symbol(sym.Punto_coma, yychar, yyline, yytext());}
 "//".* {/*Ignore*/}
 {L}({L}|{D})* { return new Symbol(sym.Identificador, yychar, yyline, yytext()); }
 {D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
