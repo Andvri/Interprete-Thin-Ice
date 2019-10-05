@@ -65,8 +65,6 @@ non terminal
         IN_MOVIMIENTO, 
         SEGMENTO,
         OP_ARITMETICA,
-        OP_RELACIONAL,
-        OP_LOGICA,
         ASIGNACION_ENTERA,
         ASIGNACION_LOGICA,
         DE_VECTOR,
@@ -81,6 +79,18 @@ non terminal
         OP_MOD,
         TERM,
         ELEMENTO,
+        OPERADOR_RELACIONAL,
+        OPERADOR_LOGICO,
+        OP_LOGICA,
+        OP_RELACIONAL,
+        ELEMENT_LOGICO,
+        FACTOR_LOG,
+        OPERADOR_SUMA_LOG,
+        OPERADOR_MULT_LOG,
+        OP_ARITMETICA_LOG,
+        TERM_LOG,
+        OP_MOD_LOG,
+        OP2,
         FUNCION;
 
 start with INICIO;
@@ -88,7 +98,7 @@ start with INICIO;
 INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
 SEGMENTO ::= 
         | DE_VARIABLE SEGMENTO
-        | AS_VARIABLE SEGMENTO 
+        | AS_VARIABLE SEGMENTO
         | FUNCION SEGMENTO;
 
 TI_VARIABLE ::= Entero | Logico;
@@ -98,7 +108,7 @@ AS_VARIABLE ::= DE_VARIABLE Asignacion OPERACION |
 
 
 
-OPERACION ::= OP_ARITMETICA;
+OPERACION ::= OP_LOGICA;
 ELEMENTO ::= Numero | Identificador | Resta Numero;
 
 FACTOR ::= Parentesis_a OP_ARITMETICA Parentesis_c | ELEMENTO ;
@@ -107,6 +117,21 @@ OPERADOR_MULT ::= Multiplicacion | Division;
 OP_ARITMETICA ::= OP_ARITMETICA OPERADOR_SUMA TERM | TERM;
 TERM ::= TERM OPERADOR_MULT OP_MOD | OP_MOD;
 OP_MOD ::= OP_MOD Modulo FACTOR | FACTOR;
+
+
+OPERADOR_RELACIONAL ::= Mayor |
+                        Mayor_igual |
+                        Menor |
+                        Menor_igual |
+                        Igual |
+                        Diferencia;
+
+OPERADOR_LOGICO ::= Y_logico |
+                    O_logico;
+
+OP2 ::= OP_ARITMETICA  OPERADOR_RELACIONAL OP_ARITMETICA | OP_ARITMETICA;
+OP_LOGICA ::= OP_LOGICA OPERADOR_LOGICO OP2 | OP2;
+
 /*
 OP_RELACIONAL ::= OP_ARITMETICA Menor OP_ARITMETICA |
                  OP_ARITMETICA Menor_igual OP_ARITMETICA |

@@ -1,25 +1,6 @@
-programa () {
-    entero a
-    entero b
-    entero a := 5
-    entero c := -4
-    logico b := 4 > 3 Y ! 2 < 4
-
-    si (4 > 3 Y ! 2 < 4) {
-        entero d := 5
-    }
-
-    si (4 > 3 Y ! 2 < 4) {
-        entero d := 5
-    } sino {
-        entero d := 4
-    }
-
-
-    
-    avanzar(5)
-    mirarArriba()
-    mirarAbajo()
-    mirarIzquierda()
-    mirarDerecha()
-}
+FACTOR_LOG ::= Parentesis_a OP_ARITMETICA_LOG Parentesis_c | ELEMENTO ;
+OPERADOR_SUMA_LOG ::= Suma | Resta;
+OPERADOR_MULT_LOG ::= Multiplicacion | Division;
+OP_ARITMETICA_LOG ::= OP_ARITMETICA_LOG OPERADOR_SUMA_LOG TERM_LOG | TERM_LOG;
+TERM_LOG ::= TERM_LOG OPERADOR_MULT_LOG OP_MOD_LOG | OP_MOD_LOG;
+OP_MOD_LOG ::= OP_MOD_LOG Modulo FACTOR_LOG | FACTOR_LOG;
