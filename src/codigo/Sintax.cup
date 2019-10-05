@@ -91,6 +91,7 @@ non terminal
         TERM_LOG,
         OP_MOD_LOG,
         OP2,
+        CONDICIONAL_SI,
         FUNCION;
 
 start with INICIO;
@@ -99,7 +100,8 @@ INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
 SEGMENTO ::= 
         | DE_VARIABLE SEGMENTO
         | AS_VARIABLE SEGMENTO
-        | FUNCION SEGMENTO;
+        | FUNCION SEGMENTO
+        | CONDICIONAL_SI SEGMENTO;
 
 TI_VARIABLE ::= Entero | Logico;
 DE_VARIABLE ::= TI_VARIABLE Identificador;
@@ -132,23 +134,5 @@ OPERADOR_LOGICO ::= Y_logico |
 OP2 ::= OP_ARITMETICA  OPERADOR_RELACIONAL OP_ARITMETICA | OP_ARITMETICA;
 OP_LOGICA ::= OP_LOGICA OPERADOR_LOGICO OP2 | OP2;
 
-/*
-OP_RELACIONAL ::= OP_ARITMETICA Menor OP_ARITMETICA |
-                 OP_ARITMETICA Menor_igual OP_ARITMETICA |
-                 OP_ARITMETICA Mayor OP_ARITMETICA |
-                 OP_ARITMETICA Mayor_igual OP_ARITMETICA |
-                 OP_ARITMETICA Igual OP_ARITMETICA |
-                 OP_ARITMETICA Diferencia OP_ARITMETICA ;
-
-OP_LOGICA ::= OP_RELACIONAL 
-            | OP_RELACIONAL Y_logico OP_LOGICA
-            | OP_RELACIONAL O_logico OP_LOGICA
-            | Negacion_logica OP_LOGICA
-            | Identificador;
-
-
-DE_VECTOR ::= TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
-PARAMETROS_FUNCION ::= | OP_ARITMETICA PARAMETROS_FUNCION |  OP_RELACIONAL PARAMETROS_FUNCION | OP_LOGICA PARAMETROS_FUNCION;
-FUNCION ::= Identificador Parentesis_a Parentesis_c;
-
-*/
+CONDICIONAL_SI ::= Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c 
+                   | Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
