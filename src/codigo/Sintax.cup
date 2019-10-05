@@ -104,14 +104,16 @@ SEGMENTO ::=
         | CONDICIONAL_SI SEGMENTO;
 
 TI_VARIABLE ::= Entero | Logico;
-DE_VARIABLE ::= TI_VARIABLE Identificador;
+DE_VARIABLE ::= TI_VARIABLE Identificador 
+              | TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
 AS_VARIABLE ::= DE_VARIABLE Asignacion OPERACION |
-                Identificador Asignacion OPERACION;
+                Identificador Asignacion OPERACION |
+                Identificador Corchete_a OP_ARITMETICA Corchete_c Asignacion OPERACION;
 
 
 
 OPERACION ::= OP_LOGICA;
-ELEMENTO ::= Numero | Identificador | Resta Numero;
+ELEMENTO ::= Numero | Identificador | Resta Numero | Identificador Corchete_a OP_ARITMETICA Corchete_c;
 
 FACTOR ::= Parentesis_a OP_LOGICA Parentesis_c | Negacion_logica Parentesis_a OP_LOGICA Parentesis_c | ELEMENTO | Negacion_logica ELEMENTO ;
 OPERADOR_SUMA ::= Suma | Resta;
