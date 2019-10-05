@@ -2,6 +2,21 @@ programa () {
     entero a
     entero b
     entero a := 5
+    entero c := -4
+    logico b := 4 > 3 Y ! 2 < 4
+
+    si (4 > 3 Y ! 2 < 4) {
+        entero d := 5
+    }
+
+    si (4 > 3 Y ! 2 < 4) {
+        entero d := 5
+    } sino {
+        entero d := 4
+    }
+
+
+    
     avanzar(5)
     mirarArriba()
     mirarAbajo()

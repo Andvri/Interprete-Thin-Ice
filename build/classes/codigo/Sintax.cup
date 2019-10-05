@@ -16,47 +16,27 @@ parser code
 :};
 
 
-terminal 
-
-    /* Programa Principal */
-    Programa, 
-
-    /* Bloques */
-    Corchete_a,Corchete_c,
-    Parentesis_a,Parentesis_c,
+terminal Programa, Corchete_a,Corchete_c,
+         Parentesis_a,Parentesis_c,
     Llave_a,Llave_c,
-
-    /* Tipo de Datos */
-    Entero,Logico,
-
-    /* Instrucciones Condicionales */
+    Entero,Logico,Vector,
+    Avanzar,
+    MirarArriba,MirarAbajo,
+    MirarIzquierda,MirarDerecha,
     Si,Sino,
-
-    /* Instrucciones de Control */
-    Para,Repita,Hasta,
-
-    /* Operación de Asignación */
+    Para,Repita,
     Asignacion,
-
-    /* Operaciónes Aritmeticas */
     Suma,Resta,
     Multiplicacion,
     Division,
     Modulo,
-
-    /* Operaciónes Relacionales */
     Menor,Menor_igual,
     Mayor,Mayor_igual,
     Igual,Diferencia,
-    
-    /* Operaciónes Logicas */
     Y_logico,O_logico,
     Negacion_logica,
-    
-    /* Otros */
     Linea,Identificador,
-    Numero,
-    ERROR;
+    Numero,ERROR;
 
 non terminal 
         INICIO,
@@ -68,22 +48,20 @@ non terminal
         OP_RELACIONAL,
         OP_LOGICA,
         ASIGNACION_ENTERA,
-        ASIGNACION_LOGICA,
-        DE_VECTOR,
-        TI_VARIABLE,
-        PARAMETROS_FUNCION,
-        FUNCION;
+        ASIGNACION_LOGICA
+        ;
 
 start with INICIO;
 
 INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
 
 DECLARACION ::= ASIGNACION_ENTERA |
-                ASIGNACION_LOGICA ;
+                ASIGNACION_LOGICA;
 
-TI_VARIABLE ::= Entero | Logico;
-
-DE_VECTOR ::= TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
+IN_ROTACION ::= MirarArriba Parentesis_a Parentesis_c |
+                MirarAbajo Parentesis_a Parentesis_c |
+                MirarIzquierda Parentesis_a Parentesis_c |
+                MirarDerecha Parentesis_a Parentesis_c;
 
 OP_ARITMETICA ::= Numero;
 
@@ -102,7 +80,6 @@ OP_LOGICA ::= OP_RELACIONAL
 ASIGNACION_ENTERA ::= Entero Identificador Asignacion OP_ARITMETICA | Entero Identificador;
 ASIGNACION_LOGICA ::= Logico Identificador Asignacion OP_LOGICA | Logico Identificador;
 
-SEGMENTO ::= | IN_ROTACION SEGMENTO | IN_MOVIMIENTO SEGMENTO | DECLARACION SEGMENTO | FUNCION SEGMENTO;
+IN_MOVIMIENTO ::= Avanzar Parentesis_a OP_ARITMETICA Parentesis_c;
 
-PARAMETROS_FUNCION ::= | OP_ARITMETICA PARAMETROS_FUNCION |  OP_RELACIONAL PARAMETROS_FUNCION | OP_LOGICA PARAMETROS_FUNCION;
-FUNCION ::= Identificador Parentesis_a Parentesis_c;
+SEGMENTO ::= | IN_ROTACION SEGMENTO | IN_MOVIMIENTO SEGMENTO | DECLARACION SEGMENTO;

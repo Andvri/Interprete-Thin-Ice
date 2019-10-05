@@ -34,6 +34,16 @@ espacio=[ ,\t,\r,\n]+
 /* Tipo de Datos */
 entero { return new Symbol(sym.Entero, yychar, yyline, yytext());}
 logico { return new Symbol(sym.Logico, yychar, yyline, yytext());}
+vector { return new Symbol(sym.Vector, yychar, yyline, yytext());}
+
+/* Instrucción de Movimiento */
+avanzar { return new Symbol(sym.Avanzar, yychar, yyline, yytext());}
+
+/* Instrucciones de Rotación */
+mirarArriba { return new Symbol(sym.MirarArriba, yychar, yyline, yytext());}
+mirarAbajo { return new Symbol(sym.MirarAbajo, yychar, yyline, yytext());}
+mirarIzquierda { return new Symbol(sym.MirarIzquierda, yychar, yyline, yytext());}
+mirarDerecha { return new Symbol(sym.MirarDerecha, yychar, yyline, yytext());}
 
 /* Instrucciones Condicionales */
 si { return new Symbol(sym.Si, yychar, yyline, yytext());}
@@ -42,7 +52,6 @@ sino { return new Symbol(sym.Sino, yychar, yyline, yytext());}
 /* Instrucciones de Control */
 para { return new Symbol(sym.Para, yychar, yyline, yytext());}
 repita { return new Symbol(sym.Repita, yychar, yyline, yytext());}
-hasta { return new Symbol(sym.Hasta, yychar, yyline, yytext());}
 
 /* Operación de Asignación */
 ":=" { return new Symbol(sym.Asignacion, yychar, yyline, yytext());}
@@ -71,5 +80,5 @@ hasta { return new Symbol(sym.Hasta, yychar, yyline, yytext());}
 {espacio} {/*Ignore*/}
 "//".* {/*Ignore*/}
 {L}({L}|{D})* { return new Symbol(sym.Identificador, yychar, yyline, yytext()); }
-{D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
+("(-"{D}+")")|{D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
  . { return new Symbol(sym.ERROR, yychar, yyline, yytext()); }

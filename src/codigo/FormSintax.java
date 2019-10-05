@@ -26,6 +26,29 @@ public class FormSintax extends javax.swing.JFrame {
      */
     public FormSintax() {
         initComponents();
+        inputText.setText("" +
+        "programa () {\n" +
+        "    entero a\n" +
+        "    entero b\n" +
+        "    entero a := 5\n" +
+        "    entero c := -4\n" +
+        "    logico b := 4 > 3 Y ! 2 < 4\n" +
+        "\n" +
+        "    si (4 > 3 Y ! 2 < 4) {\n" +
+        "        entero d := 5\n" +
+        "    }\n" +
+        "\n" +
+        "    si (4 > 3 Y ! 2 < 4) {\n" +
+        "        entero d := 5\n" +
+        "    } sino {\n" +
+        "        entero d := 4\n" +
+        "    }\n" +
+        "\n" +
+        "    entero i[10]\n" +
+        "    \n" +
+        "}");
+        
+        analizar();
         inputText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void removeUpdate(DocumentEvent e) {

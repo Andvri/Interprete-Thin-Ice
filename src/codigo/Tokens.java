@@ -22,20 +22,13 @@ public enum Tokens {
     /* Tipo de Datos */
     Entero,
     Logico,
-    Vector,
-    /* Instrucción de Movimiento */
-    Avanzar,
-    /* Instrucciones de Rotación */
-    MirarArriba,
-    MirarAbajo,
-    MirarIzquierda,
-    MirarDerecha,
     /* Instrucciones Condicionales */
     Si,
     Sino,
     /* Instrucciones de Control */
     Para,
     Repita,
+    Hasta,
     /* Operación de Asignación */
     Asignacion,
     /* Operaciónes Aritmeticas */

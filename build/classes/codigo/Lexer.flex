@@ -27,6 +27,16 @@ espacio=[ ,\t,\r]+
 /* Tipo de Datos */
 entero { lexeme=yytext(); return Entero;}
 logico { lexeme=yytext(); return Logico;}
+vector { lexeme=yytext(); return Vector;}
+
+/* Instrucción de Movimiento */
+avanzar { lexeme=yytext(); return Avanzar;}
+
+/* Instrucciones de Rotación */
+mirarArriba { lexeme=yytext(); return MirarArriba;}
+mirarAbajo { lexeme=yytext(); return MirarAbajo;}
+mirarIzquierda { lexeme=yytext(); return MirarIzquierda;}
+mirarDerecha { lexeme=yytext(); return MirarDerecha;}
 
 /* Instrucciones Condicionales */
 si { lexeme=yytext(); return Si;}
@@ -35,7 +45,6 @@ sino { lexeme=yytext(); return Sino;}
 /* Instrucciones de Control */
 para {lexeme=yytext(); return Para;}
 repita {lexeme=yytext(); return Repita;}
-hasta {lexeme=yytext(); return Hasta;}
 
 /* Operación de Asignación */
 ":=" { lexeme=yytext(); return Asignacion;}
@@ -65,5 +74,5 @@ hasta {lexeme=yytext(); return Hasta;}
 "//".* {/*Ignore*/}
 "\n" {return Linea;}
 {L}({L}|{D})* {lexeme=yytext(); return Identificador;}
-{D}+ {lexeme=yytext(); return Numero;}
+("(-"{D}+")")|{D}+ {lexeme=yytext(); return Numero;}
  . {return ERROR;}
