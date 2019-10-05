@@ -72,37 +72,58 @@ non terminal
         DE_VECTOR,
         TI_VARIABLE,
         PARAMETROS_FUNCION,
+        DE_VARIABLE,
+        AS_VARIABLE,
+        OPERACION,
+        FACTOR,
+        OPERADOR_SUMA,
+        OPERADOR_MULT,
+        OP_MOD,
+        TERM,
+        ELEMENTO,
         FUNCION;
 
 start with INICIO;
 
 INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
-
-DECLARACION ::= ASIGNACION_ENTERA |
-                ASIGNACION_LOGICA ;
+SEGMENTO ::= 
+        | DE_VARIABLE SEGMENTO
+        | AS_VARIABLE SEGMENTO 
+        | FUNCION SEGMENTO;
 
 TI_VARIABLE ::= Entero | Logico;
+DE_VARIABLE ::= TI_VARIABLE Identificador;
+AS_VARIABLE ::= DE_VARIABLE Asignacion OPERACION |
+                Identificador Asignacion OPERACION;
 
-DE_VECTOR ::= TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
 
-OP_ARITMETICA ::= Numero | Resta Numero;
 
+OPERACION ::= OP_ARITMETICA;
+ELEMENTO ::= Numero | Identificador | Resta Numero;
+
+FACTOR ::= Parentesis_a OP_ARITMETICA Parentesis_c | ELEMENTO ;
+OPERADOR_SUMA ::= Suma | Resta;
+OPERADOR_MULT ::= Multiplicacion | Division;
+OP_ARITMETICA ::= OP_ARITMETICA OPERADOR_SUMA TERM | TERM;
+TERM ::= TERM OPERADOR_MULT OP_MOD | OP_MOD;
+OP_MOD ::= OP_MOD Modulo FACTOR | FACTOR;
+/*
 OP_RELACIONAL ::= OP_ARITMETICA Menor OP_ARITMETICA |
                  OP_ARITMETICA Menor_igual OP_ARITMETICA |
                  OP_ARITMETICA Mayor OP_ARITMETICA |
                  OP_ARITMETICA Mayor_igual OP_ARITMETICA |
                  OP_ARITMETICA Igual OP_ARITMETICA |
-                 OP_ARITMETICA Diferencia OP_ARITMETICA;
+                 OP_ARITMETICA Diferencia OP_ARITMETICA ;
 
 OP_LOGICA ::= OP_RELACIONAL 
             | OP_RELACIONAL Y_logico OP_LOGICA
             | OP_RELACIONAL O_logico OP_LOGICA
-            | Negacion_logica OP_LOGICA;
+            | Negacion_logica OP_LOGICA
+            | Identificador;
 
-ASIGNACION_ENTERA ::= Entero Identificador Asignacion OP_ARITMETICA | Entero Identificador;
-ASIGNACION_LOGICA ::= Logico Identificador Asignacion OP_LOGICA | Logico Identificador;
 
-SEGMENTO ::= | IN_ROTACION SEGMENTO | IN_MOVIMIENTO SEGMENTO | DECLARACION SEGMENTO | FUNCION SEGMENTO;
-
+DE_VECTOR ::= TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
 PARAMETROS_FUNCION ::= | OP_ARITMETICA PARAMETROS_FUNCION |  OP_RELACIONAL PARAMETROS_FUNCION | OP_LOGICA PARAMETROS_FUNCION;
 FUNCION ::= Identificador Parentesis_a Parentesis_c;
+
+*/
