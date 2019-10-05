@@ -60,37 +60,22 @@ terminal
 
 non terminal 
         INICIO,
-        DECLARACION, 
-        IN_ROTACION, 
-        IN_MOVIMIENTO, 
         SEGMENTO,
-        OP_ARITMETICA,
-        ASIGNACION_ENTERA,
-        ASIGNACION_LOGICA,
-        DE_VECTOR,
-        TI_VARIABLE,
-        PARAMETROS_FUNCION,
-        DE_VARIABLE,
+        OPERACION_ARITMETICA,
+        TIPO_VARIABLE,
+        DEFINICION_VARIABLE,
         AS_VARIABLE,
         OPERACION,
         FACTOR,
         OPERADOR_SUMA,
         OPERADOR_MULT,
-        OP_MOD,
+        OPERACION_MOD,
         TERM,
         ELEMENTO,
         OPERADOR_RELACIONAL,
         OPERADOR_LOGICO,
-        OP_LOGICA,
-        OP_RELACIONAL,
-        ELEMENT_LOGICO,
-        FACTOR_LOG,
-        OPERADOR_SUMA_LOG,
-        OPERADOR_MULT_LOG,
-        OP_ARITMETICA_LOG,
-        TERM_LOG,
-        OP_MOD_LOG,
-        OP2,
+        OPERACION_LOGICA,
+        OPERACION_RELACIONAL,
         CONDICIONAL_SI,
         CICLO_PARA,
         CICLO_REPITA_HASTA_QUE,
@@ -100,32 +85,12 @@ start with INICIO;
 
 INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
 SEGMENTO ::= 
-        | DE_VARIABLE SEGMENTO
+        | DEFINICION_VARIABLE SEGMENTO
         | AS_VARIABLE SEGMENTO
         | FUNCION SEGMENTO
         | CONDICIONAL_SI SEGMENTO
         | CICLO_PARA SEGMENTO
         | CICLO_REPITA_HASTA_QUE SEGMENTO;
-
-TI_VARIABLE ::= Entero | Logico;
-DE_VARIABLE ::= TI_VARIABLE Identificador 
-              | TI_VARIABLE Identificador Corchete_a OP_ARITMETICA Corchete_c;
-AS_VARIABLE ::= DE_VARIABLE Asignacion OPERACION |
-                Identificador Asignacion OPERACION |
-                Identificador Corchete_a OP_ARITMETICA Corchete_c Asignacion OPERACION;
-
-
-
-OPERACION ::= OP_LOGICA;
-ELEMENTO ::= Numero | Identificador | Resta Numero | Identificador Corchete_a OP_ARITMETICA Corchete_c;
-
-FACTOR ::= Parentesis_a OP_LOGICA Parentesis_c | Negacion_logica Parentesis_a OP_LOGICA Parentesis_c | ELEMENTO | Negacion_logica ELEMENTO ;
-OPERADOR_SUMA ::= Suma | Resta;
-OPERADOR_MULT ::= Multiplicacion | Division;
-OP_ARITMETICA ::= OP_ARITMETICA OPERADOR_SUMA TERM | TERM;
-TERM ::= TERM OPERADOR_MULT OP_MOD | OP_MOD;
-OP_MOD ::= OP_MOD Modulo FACTOR | FACTOR;
-
 
 OPERADOR_RELACIONAL ::= Mayor |
                         Mayor_igual |
@@ -137,12 +102,39 @@ OPERADOR_RELACIONAL ::= Mayor |
 OPERADOR_LOGICO ::= Y_logico |
                     O_logico;
 
-OP2 ::= OP_ARITMETICA  OPERADOR_RELACIONAL OP_ARITMETICA | OP_ARITMETICA;
-OP_LOGICA ::= OP_LOGICA OPERADOR_LOGICO OP2 | OP2;
+OPERADOR_SUMA ::= Suma | Resta;
+OPERADOR_MULT ::= Multiplicacion | Division;
 
-CONDICIONAL_SI ::= Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c 
-                   | Si Parentesis_a OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
+TIPO_VARIABLE ::= Entero | Logico;
+DEFINICION_VARIABLE ::= TIPO_VARIABLE Identificador 
+              | TIPO_VARIABLE Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
+AS_VARIABLE ::= DEFINICION_VARIABLE Asignacion OPERACION |
+                Identificador Asignacion OPERACION |
+                Identificador Corchete_a OPERACION_ARITMETICA Corchete_c Asignacion OPERACION;
 
-CICLO_PARA ::= Para Parentesis_a OP_LOGICA Punto_coma OP_LOGICA Punto_coma OP_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
 
-CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OP_LOGICA Punto_coma;
+
+OPERACION ::= OPERACION_LOGICA;
+ELEMENTO ::= Numero | 
+            Identificador | 
+            Resta Numero | 
+            Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
+
+FACTOR ::= Parentesis_a OPERACION_LOGICA Parentesis_c | 
+        Negacion_logica Parentesis_a OPERACION_LOGICA Parentesis_c | 
+        ELEMENTO | 
+        Negacion_logica ELEMENTO ;
+        
+OPERACION_ARITMETICA ::= OPERACION_ARITMETICA OPERADOR_SUMA TERM | TERM;
+TERM ::= TERM OPERADOR_MULT OPERACION_MOD | OPERACION_MOD;
+OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR | FACTOR;
+
+OPERACION_RELACIONAL ::= OPERACION_ARITMETICA  OPERADOR_RELACIONAL OPERACION_ARITMETICA | OPERACION_ARITMETICA;
+OPERACION_LOGICA ::= OPERACION_LOGICA OPERADOR_LOGICO OPERACION_RELACIONAL | OPERACION_RELACIONAL;
+
+
+CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c 
+                   | Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
+
+CICLO_PARA ::= Para Parentesis_a OPERACION_LOGICA Punto_coma OPERACION_LOGICA Punto_coma OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
+CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OPERACION_LOGICA Punto_coma;

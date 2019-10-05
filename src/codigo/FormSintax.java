@@ -26,28 +26,28 @@ public class FormSintax extends javax.swing.JFrame {
      */
     public FormSintax() {
         initComponents();
-        inputText.setText("" +
-        "programa () {\n" +
-        "    entero a\n" +
-        "    entero b\n" +
-        "    entero a := 5\n" +
-        "    entero c := -4\n" +
-        "    logico b := 4 > 3 Y ! 2 < 4\n" +
-        "\n" +
-        "    si (4 > 3 Y ! 2 < 4) {\n" +
-        "        entero d := 5\n" +
-        "    }\n" +
-        "\n" +
-        "    si (4 > 3 Y ! 2 < 4) {\n" +
-        "        entero d := 5\n" +
-        "    } sino {\n" +
-        "        entero d := 4\n" +
-        "    }\n" +
-        "\n" +
-        "    entero i[10]\n" +
-        "    \n" +
-        "}");
-        
+        inputText.setText(""
+                + "programa () {\n"
+                + "    entero a\n"
+                + "    entero b\n"
+                + "    entero a := 5\n"
+                + "    entero c := -4\n"
+                + "    logico b := 4 > 3 Y ! 2 < 4\n"
+                + "\n"
+                + "    si (4 > 3 Y ! 2 < 4) {\n"
+                + "        entero d := 5\n"
+                + "    }\n"
+                + "\n"
+                + "    si (4 > 3 Y ! 2 < 4) {\n"
+                + "        entero d := 5\n"
+                + "    } sino {\n"
+                + "        entero d := 4\n"
+                + "    }\n"
+                + "\n"
+                + "    entero i[10]\n"
+                + "    \n"
+                + "}");
+
         analizar();
         inputText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -281,25 +281,25 @@ public class FormSintax extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void analizarSintax() throws Exception {
         String ST = inputText.getText();
         StringReader str = new StringReader(ST);
         LexerCup lc = new codigo.LexerCup(str);
         Sintax s = new Sintax(lc);
-        
+
         try {
             s.parse();
             txtAnalizarSin.setText("Analisis Realizado con Exito");
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Symbol sym = s.getS();
             txtAnalizarSin.setText("Error de Sintaxis. Linea: " + (sym.right + 1) + " Columna:" + (sym.left + 1) + " Error:\"" + sym.value + "\"");
             txtAnalizarSin.setForeground(Color.red);
         }
     }
 
-    private void analizarLexico() throws IOException{
+    private void analizarLexico() throws IOException {
         int cont = 1;
         String expr = (String) inputText.getText();
         Lexer lexer = new Lexer(new StringReader(expr));
