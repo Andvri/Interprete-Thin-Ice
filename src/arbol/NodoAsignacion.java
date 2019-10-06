@@ -10,34 +10,34 @@ package arbol;
  * @author kvnsnchz
  */
 public class NodoAsignacion extends NodoBase{
-    private String identificador;
-    private NodoBase asignacion;
+    private String Identificador;
+    private NodoBase Asignacion;
 
-    public NodoAsignacion(String identificador) {
+    public NodoAsignacion(String Identificador) {
         super();
-        this.identificador = identificador;
-        this.asignacion = null;
+        this.Identificador = Identificador;
+        this.Asignacion = null;
     }
 
-    public NodoAsignacion(String identificador, NodoBase asignacion) {
+    public NodoAsignacion(String Identificador, NodoBase Asignacion) {
         super();
-        this.identificador = identificador;
-        this.asignacion = asignacion;
+        this.Identificador = Identificador;
+        this.Asignacion = Asignacion;
     }
 
     public String getIdentificador() {
-        return identificador;
+        return Identificador;
     }
 
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
+    public void setIdentificador(String Identificador) {
+        this.Identificador = Identificador;
     }
 
     public NodoBase getAsignacion() {
-        return asignacion;
+        return Asignacion;
     }
 
-    public void setAsignacion(NodoBase asignacion) {
-        this.asignacion = asignacion;
+    public void setAsignacion(NodoBase Asignacion) {
+        this.Asignacion = Asignacion;
     }
 }

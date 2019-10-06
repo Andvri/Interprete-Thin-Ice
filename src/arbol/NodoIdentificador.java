@@ -10,11 +10,11 @@ package arbol;
  * @author kvnsnchz
  */
 public class NodoIdentificador extends NodoBase{
-    private String identificador;
+    private String Identificador;
 
-    public NodoIdentificador(String identificador) {
+    public NodoIdentificador(String Identificador) {
         super();
-        this.identificador = identificador;
+        this.Identificador = Identificador;
     }
 
     public NodoIdentificador() {
@@ -22,6 +22,6 @@ public class NodoIdentificador extends NodoBase{
     }
 
     public String getIdentificador() {
-        return identificador;
+        return Identificador;
     }
 }

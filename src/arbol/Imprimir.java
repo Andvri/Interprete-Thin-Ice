@@ -6,6 +6,7 @@
 package arbol;
 
 import codigo.Tokens;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -14,95 +15,98 @@ import codigo.Tokens;
 public class Imprimir {
     static int sangria = 0;
 	
-    public static void imprimir(NodoBase raiz){
+    public static void imprimir(NodoBase raiz, JTextArea textArea){
         sangria += 2;
 		System.out.println();
         while (raiz != null) {
-          imprimirSangria();
+          imprimirSangria(textArea);
             
             if (raiz instanceof  NodoPrograma){
-                System.out.println("programa");
+                textArea.append("programa");
             }
             else{
                 if (raiz instanceof  NodoSi){
-                System.out.println("si");
+                    textArea.append("si");
                 }
                 else{
                   if (raiz instanceof  NodoPara){
-                     System.out.println("para");
+                     textArea.append("para");
                   }
                   else{
                       if (raiz instanceof  NodoRepita){
-                          System.out.println("repita");
+                          textArea.append("repita");
                       }
                       else{
+                          if (raiz instanceof  NodoDefinicion){
+                              textArea.append(((NodoDefinicion)raiz).getTipoDato() + " " + ((NodoDefinicion)raiz).getIdentificador());
+                          }
                           if (raiz instanceof  NodoAsignacion){
-                              System.out.println(((NodoAsignacion)raiz).getIdentificador() + ":=");
+                              textArea.append(((NodoAsignacion)raiz).getIdentificador() + ":=");
                           }
                           else{
                               if (raiz instanceof NodoOperacion){
                                   Tokens operacion = ((NodoOperacion) raiz).getOperacion();
 
                                   if(operacion == Tokens.Menor){
-                                      System.out.println("<"); 
+                                      textArea.append("<"); 
                                   }
 
                                   if(operacion == Tokens.Mayor){
-                                      System.out.println(">");
+                                      textArea.append(">");
                                   }
 
                                   if(operacion == Tokens.Menor_igual){
-                                      System.out.println("<="); 
+                                      textArea.append("<="); 
                                   }
 
                                   if(operacion == Tokens.Mayor_igual){
-                                      System.out.println(">="); 
+                                      textArea.append(">="); 
                                   }
 
                                   if(operacion == Tokens.Igual){
-                                      System.out.println("=");
+                                      textArea.append("=");
                                   }
 
                                   if(operacion == Tokens.Y_logico){
-                                      System.out.println("Y");
+                                      textArea.append("Y");
                                   }
 
                                   if(operacion == Tokens.O_logico){
-                                      System.out.println("O");
+                                      textArea.append("O");
                                   }
 
                                   if(operacion == Tokens.Negacion_logica){
-                                      System.out.println("!");
+                                      textArea.append("!");
                                   }
 
                                   if(operacion == Tokens.Diferencia){
-                                      System.out.println("<>");
+                                      textArea.append("<>");
                                   }
 
                                   if(operacion == Tokens.Suma){
-                                      System.out.println("+");
+                                      textArea.append("+");
                                   }
 
                                   if(operacion == Tokens.Resta){
-                                      System.out.println("-");
+                                      textArea.append("-");
                                   }
 
                                   if(operacion == Tokens.Multiplicacion){
-                                      System.out.println("*");
+                                      textArea.append("*");
                                   }        
 
                                   if(operacion == Tokens.Division){
-                                      System.out.println("/");
+                                      textArea.append("/");
                                   }
 
                               }
                               else{
                                   if (raiz instanceof NodoNumero){
-                                      System.out.println(((NodoNumero)raiz).getNumero());
+                                      textArea.append("" + ((NodoNumero)raiz).getNumero());
                                   }
                                   else{
                                       if(raiz instanceof NodoIdentificador ){
-                                          System.out.println(((NodoIdentificador)raiz).getIdentificador());
+                                          textArea.append(((NodoIdentificador)raiz).getIdentificador());
                                       }
                                   }
                               }
@@ -112,70 +116,72 @@ public class Imprimir {
                 }
             }
             
+            textArea.append("\n");
+            
             if (raiz instanceof  NodoPrograma){
-              imprimirSangria();
-              System.out.println("--Programa_Segmento--");
-              imprimir(((NodoPrograma)raiz).getSegmento());
+              imprimirSangria(textArea);
+              textArea.append("--Programa_Segmento--\n");
+              imprimir(((NodoPrograma)raiz).getSegmento(), textArea);
             }
             else{
                 if (raiz instanceof  NodoSi){
-                    imprimirSangria();
-                    System.out.println("--Si_Condicion--");
-                    imprimir(((NodoSi)raiz).getCondicion());
+                    imprimirSangria(textArea);
+                    textArea.append("--Si_Condicion--\n");
+                    imprimir(((NodoSi)raiz).getCondicion(), textArea);
 
-                    imprimirSangria();
-                    System.out.println("--Si_Segmento--");
-                    imprimir(((NodoSi)raiz).getSegmento());
+                    imprimirSangria(textArea);
+                    textArea.append("--Si_Segmento--\n");
+                    imprimir(((NodoSi)raiz).getSegmento(), textArea);
 
                     if(((NodoSi)raiz).getSino() != null){
-                            imprimirSangria();
-                            System.out.println("--Si_Sino--");
-                            imprimir(((NodoSi)raiz).getSino());
+                            imprimirSangria(textArea);
+                            textArea.append("--Si_Sino--\n");
+                            imprimir(((NodoSi)raiz).getSino(), textArea);
                     }
                   }
                   else{ 
                       if (raiz instanceof  NodoPara){
-                          imprimirSangria();
-                          System.out.println("--Para_Inicializador--");
-                          imprimir(((NodoPara)raiz).getInicializador());
+                          imprimirSangria(textArea);
+                          textArea.append("--Para_Inicializador--\n");
+                          imprimir(((NodoPara)raiz).getInicializador(), textArea);
 
-                          imprimirSangria();
-                          System.out.println("--Para_Paso--");
-                          imprimir(((NodoPara)raiz).getPaso());
+                          imprimirSangria(textArea);
+                          textArea.append("--Para_Paso--\n");
+                          imprimir(((NodoPara)raiz).getPaso(), textArea);
 
-                          imprimirSangria();
-                          System.out.println("--Para_Verificacion--");
-                          imprimir(((NodoPara)raiz).getVerificacion());
+                          imprimirSangria(textArea);
+                          textArea.append("--Para_Verificacion--\n");
+                          imprimir(((NodoPara)raiz).getVerificacion(), textArea);
 
-                          imprimirSangria();
-                          System.out.println("--Para_Segmento--");
-                          imprimir(((NodoPara)raiz).getSegmento());
+                          imprimirSangria(textArea);
+                          textArea.append("--Para_Segmento--\n");
+                          imprimir(((NodoPara)raiz).getSegmento(), textArea);
                       }
                       else{ 
                           if (raiz instanceof  NodoRepita){
-                              imprimirSangria();
-                              System.out.println("--Repita_Segmento--");
-                              imprimir(((NodoRepita)raiz).getSegmento());
+                              imprimirSangria(textArea);
+                              textArea.append("--Repita_Segmento--\n");
+                              imprimir(((NodoRepita)raiz).getSegmento(), textArea);
 
-                              imprimirSangria();
-                              System.out.println("--Repita_Condicion--");
-                              imprimir(((NodoRepita)raiz).getCondicion());
+                              imprimirSangria(textArea);
+                              textArea.append("--Repita_Condicion--\n");
+                              imprimir(((NodoRepita)raiz).getCondicion(), textArea);
                           }
                           else{ 
                               if (raiz instanceof  NodoAsignacion){
-                                  imprimirSangria();
-                                  System.out.println("--Asignacion--");
-                                  imprimir(((NodoAsignacion)raiz).getAsignacion());
+                                  imprimirSangria(textArea);
+                                  textArea.append("--Asignacion--\n");
+                                  imprimir(((NodoAsignacion)raiz).getAsignacion(), textArea);
                               }
                               else{ 
                                   if (raiz instanceof  NodoOperacion){
-                                      imprimirSangria();
-                                      System.out.println("--Operacion_Izquierda--");
-                                      imprimir(((NodoOperacion)raiz).getOpI());
+                                      imprimirSangria(textArea);
+                                      textArea.append("--Operacion_Izquierda--\n");
+                                      imprimir(((NodoOperacion)raiz).getOpI(), textArea);
 
-                                      imprimirSangria();
-                                      System.out.println("--Operacion_Derecha--");
-                                      imprimir(((NodoOperacion)raiz).getOpD());
+                                      imprimirSangria(textArea);
+                                      textArea.append("--Operacion_Derecha--\n");
+                                      imprimir(((NodoOperacion)raiz).getOpD(), textArea);
                                   }
                               }
                           }
@@ -189,9 +195,9 @@ public class Imprimir {
         sangria-=2;
     }
     
-    static void imprimirSangria() { 
+    static void imprimirSangria(JTextArea textArea) { 
       for (int i = 0; i < sangria; i++){
-        System.out.print(" ");  
+        textArea.append(" ");  
       }
     }
 }

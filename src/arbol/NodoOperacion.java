@@ -23,6 +23,13 @@ public class NodoOperacion extends NodoBase {
             this.OpD = OpD;
             this.Operacion = Operacion;
     }
+    
+    public NodoOperacion() {
+            super();
+            this.OpI = null;
+            this.OpD = null;
+            this.Operacion = null;
+    }
 
     /*
     public NodoOperacion(Tokens Operacion) {

@@ -10,15 +10,15 @@ package arbol;
  * @author kvnsnchz
  */
 public class NodoNumero extends NodoBase{
-    private int numero;
+    private int Numero;
 
-    public NodoNumero(String numero) {
+    public NodoNumero(String Numero) {
         super();
-        this.numero = Integer.parseInt(numero);
+        this.Numero = Integer.parseInt(Numero);
     }
-    public NodoNumero(int numero) {
+    public NodoNumero(int Numero) {
         super();
-        this.numero = numero;
+        this.Numero = Numero;
     }
 
     public NodoNumero() {
@@ -26,6 +26,6 @@ public class NodoNumero extends NodoBase{
     }
 
     public int getNumero() {
-        return numero;
+        return Numero;
     }
 }

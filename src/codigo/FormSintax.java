@@ -292,9 +292,10 @@ public class FormSintax extends javax.swing.JFrame {
 
         try {
             s.parse();
-            NodoBase root= s.getNodoBase();
-            Imprimir.imprimir(root);
-            txtAnalizarSin.setText("Analisis Realizado con Exito");
+            txtAnalizarSin.append("Analisis Realizado con Exito");
+            txtAnalizarSin.append("\n \n AST \n");
+            NodoBase raiz= s.getNodoBase();
+            Imprimir.imprimir(raiz, txtAnalizarSin);
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
             Symbol sym = s.getS();
