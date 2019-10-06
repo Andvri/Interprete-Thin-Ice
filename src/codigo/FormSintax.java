@@ -5,6 +5,8 @@
  */
 package codigo;
 
+import arbol.Imprimir;
+import arbol.NodoBase;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.StringReader;
@@ -290,6 +292,8 @@ public class FormSintax extends javax.swing.JFrame {
 
         try {
             s.parse();
+            NodoBase root= s.getNodoBase();
+            Imprimir.imprimir(root);
             txtAnalizarSin.setText("Analisis Realizado con Exito");
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {

@@ -1,18 +1,28 @@
 package codigo;
 
 import java_cup.runtime.Symbol;
+import arbol.*;
 
 parser code
 {:
     private Symbol s;
-    
+    private NodoBase nodoBase=null;
+
     public void syntax_error(Symbol s){
         this.s = s;
     }
 
     public Symbol getS(){
         return this.s;
-}
+    }
+    
+    public NodoBase getNodoBase(){
+        return nodoBase;
+    }
+
+    public void setNodoBase(NodoBase nodoBase){
+        this.nodoBase = nodoBase;
+    }
 :};
 
 
@@ -61,6 +71,7 @@ terminal
 non terminal 
         INICIO,
         SEGMENTO,
+        SENTENCIA,
         OPERACION_ARITMETICA,
         TIPO_VARIABLE,
         DEFINICION_VARIABLE,
@@ -83,14 +94,31 @@ non terminal
 
 start with INICIO;
 
-INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
-SEGMENTO ::= 
-        | DEFINICION_VARIABLE SEGMENTO
-        | AS_VARIABLE SEGMENTO
-        | FUNCION SEGMENTO
-        | CONDICIONAL_SI SEGMENTO
-        | CICLO_PARA SEGMENTO
-        | CICLO_REPITA_HASTA_QUE SEGMENTO;
+INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO:seg Llave_c {:
+    NodoPrograma nodo = new NodoPrograma((NodoBase) seg);
+    this.parser.setNodoBase(nodo); 
+:};
+
+SEGMENTO ::= | SEGMENTO:seg SENTENCIA:sent {:
+    NodoBase hijo = (NodoBase) seg;
+    if(hijo !=null){
+        while(!hijo.withoutHermanoD()){
+            hijo = hijo.getHermanoD();
+        }
+        hijo.setHermanoD((NodoBase) sent);
+        RESULT=seg;
+    }else{
+        RESULT=sent;
+    }
+:};
+
+SENTENCIA ::= 
+        DEFINICION_VARIABLE:def {: RESULT=def; :}
+        | AS_VARIABLE:asig {: RESULT=asig; :}
+        | FUNCION:func {: RESULT=func; :}  
+        | CONDICIONAL_SI:si {: RESULT=si; :}
+        | CICLO_PARA:para {: RESULT=para; :}
+        | CICLO_REPITA_HASTA_QUE:rep {: RESULT=rep; :};
 
 OPERADOR_RELACIONAL ::= Mayor |
                         Mayor_igual |
@@ -106,7 +134,7 @@ OPERADOR_SUMA ::= Suma | Resta;
 OPERADOR_MULT ::= Multiplicacion | Division;
 
 TIPO_VARIABLE ::= Entero | Logico;
-DEFINICION_VARIABLE ::= TIPO_VARIABLE Identificador 
+DEFINICION_VARIABLE ::= TIPO_VARIABLE Identificador
               | TIPO_VARIABLE Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
 AS_VARIABLE ::= DEFINICION_VARIABLE Asignacion OPERACION |
                 Identificador Asignacion OPERACION |
@@ -133,7 +161,7 @@ OPERACION_RELACIONAL ::= OPERACION_ARITMETICA  OPERADOR_RELACIONAL OPERACION_ARI
 OPERACION_LOGICA ::= OPERACION_LOGICA OPERADOR_LOGICO OPERACION_RELACIONAL | OPERACION_RELACIONAL;
 
 
-CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c 
+CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg);:}
                    | Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
 
 CICLO_PARA ::= Para Parentesis_a OPERACION_LOGICA Punto_coma OPERACION_LOGICA Punto_coma OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
