@@ -27,8 +27,6 @@ public class TablaSimbolos {
                 NodoDefinicion nodoD = (NodoDefinicion)raiz; 
                 insertar(nodoD.getIdentificador(), nodoD.getTipoDato(), nodoD.getIndiceVector());
             }
-            
-            
            
             if (raiz instanceof  NodoPrograma){
               cargar(((NodoPrograma)raiz).getSegmento());
@@ -94,20 +92,31 @@ public class TablaSimbolos {
     }
     
     public boolean insertar(String identificador, TiposIds tipo, NodoBase indiceVector){
-        ElementoTablaS simbolo;
+        ElementoTablaS elemento;
         
         if(tabla.containsKey(identificador)){
             return false;
         }else{
             if(indiceVector == null){
-                simbolo= new ElementoTablaS(identificador, tipo);
+                elemento = new ElementoTablaS(identificador, tipo);
             }
             else{
-                simbolo= new ElementoTablaS(identificador, tipo, true);
+                elemento = new ElementoTablaS(identificador, tipo, true);
             }
             
-            tabla.put(identificador,simbolo);
+            tabla.put(identificador, elemento);
             return true;			
+        }
+    }
+    
+    public ElementoTablaS buscar(String identificador){
+        return (ElementoTablaS)tabla.get(identificador);
+    }
+    
+    public void imprimir(){
+        System.out.println("Tabla de Simbolos");
+        for (String i : tabla.keySet()) {
+            System.out.println("id: " + i + " tipo: " + tabla.get(i).getTipo() + " isVector: " + tabla.get(i).getIsVector());
         }
     }
 }

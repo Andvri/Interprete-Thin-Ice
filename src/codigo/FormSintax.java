@@ -300,8 +300,14 @@ public class FormSintax extends javax.swing.JFrame {
             s.parse();
             txtAnalizarSin.append("Analisis Realizado con Exito");
             txtAnalizarSin.append("\n \n AST \n");
+            
             NodoBase raiz= s.getNodoBase();
             Imprimir.imprimir(raiz, txtAnalizarSin);
+            
+            TablaSimbolos ts = new TablaSimbolos();
+            ts.cargar(raiz);
+            ts.imprimir();
+            
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
             Symbol sym = s.getS();

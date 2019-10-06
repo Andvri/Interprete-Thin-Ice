@@ -59,7 +59,7 @@ public class ElementoTablaS {
         this.tipo = tipo;
     }
 
-    public boolean isIsVector() {
+    public boolean getIsVector() {
         return isVector;
     }
 
