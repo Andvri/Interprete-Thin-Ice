@@ -5,23 +5,25 @@
  */
 package arbol;
 
+import codigo.TiposIds;
+
 /**
  *
  * @author kvnsnchz
  */
 public class NodoDefinicion extends NodoBase{
     private String Identificador;
-    private String TipoVariable;
+    private TiposIds TipoVariable;
     private NodoBase IndiceVector;
 
-    public NodoDefinicion(String Identificador, String TipoVariable) {
+    public NodoDefinicion(String Identificador, TiposIds TipoVariable) {
         super();
         this.Identificador = Identificador;
         this.TipoVariable = TipoVariable;
         this.IndiceVector = null;
     }
     
-    public NodoDefinicion(String Identificador, String TipoVariable, NodoBase IndiceVector) {
+    public NodoDefinicion(String Identificador, TiposIds TipoVariable, NodoBase IndiceVector) {
         super();
         this.Identificador = Identificador;
         this.TipoVariable = TipoVariable;
@@ -43,11 +45,11 @@ public class NodoDefinicion extends NodoBase{
         this.Identificador = Identificador;
     }
     
-    public String getTipoDato() {
+    public TiposIds getTipoDato() {
         return TipoVariable;
     }
     
-    public void setTipoDato(String TipoVariable) {
+    public void setTipoDato(TiposIds TipoVariable) {
        this.TipoVariable = TipoVariable;
     }
     

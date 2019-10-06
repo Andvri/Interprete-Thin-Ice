@@ -136,11 +136,11 @@ OPERADOR_SUMA ::= Suma:sum {: RESULT=Tokens.Suma; :}
 OPERADOR_MULT ::= Multiplicacion:mult {: RESULT=Tokens.Multiplicacion; :} 
                 | Division:div {: RESULT=Tokens.Division; :};
 
-TIPO_VARIABLE ::= Entero:entero {: RESULT=entero; :}
-            | Logico:logico {: RESULT=logico; :};
+TIPO_VARIABLE ::= Entero:entero {: RESULT=TiposIds.entero; :}
+            | Logico:logico {: RESULT=TiposIds.logico; :};
 
-DEFINICION_VARIABLE ::= TIPO_VARIABLE:tipo Identificador:id {: RESULT= new NodoDefinicion(id.toString(), tipo.toString()); :}
-              | TIPO_VARIABLE:tipo Identificador:id Corchete_a OPERACION_ARITMETICA:oper Corchete_c {: RESULT= new NodoDefinicion(id.toString(), tipo.toString(), (NodoBase) oper); :};
+DEFINICION_VARIABLE ::= TIPO_VARIABLE:tipo Identificador:id {: RESULT= new NodoDefinicion(id.toString(), (TiposIds) tipo); :}
+              | TIPO_VARIABLE:tipo Identificador:id Corchete_a OPERACION_ARITMETICA:oper Corchete_c {: RESULT= new NodoDefinicion(id.toString(), (TiposIds) tipo, (NodoBase) oper); :};
 
 AS_VARIABLE ::= DEFINICION_VARIABLE:def Asignacion OPERACION:asig {:
                     NodoAsignacion nodo = new NodoAsignacion(((NodoDefinicion)def).getIdentificador(), (NodoBase) asig);

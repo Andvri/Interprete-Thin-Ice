@@ -17,7 +17,7 @@ public class Imprimir {
 	
     public static void imprimir(NodoBase raiz, JTextArea textArea){
         sangria += 2;
-		System.out.println();
+        
         while (raiz != null) {
           imprimirSangria(textArea);
             
@@ -38,78 +38,81 @@ public class Imprimir {
                       }
                       else{
                           if (raiz instanceof  NodoDefinicion){
-                              textArea.append(((NodoDefinicion)raiz).getTipoDato() + " " + ((NodoDefinicion)raiz).getIdentificador());
-                          }
-                          if (raiz instanceof  NodoAsignacion){
-                              textArea.append(((NodoAsignacion)raiz).getIdentificador() + ":=");
+                              textArea.append(((NodoDefinicion)raiz).getTipoDato().toString() + " " + ((NodoDefinicion)raiz).getIdentificador());
                           }
                           else{
-                              if (raiz instanceof NodoOperacion){
-                                  Tokens operacion = ((NodoOperacion) raiz).getOperacion();
+                            if (raiz instanceof  NodoAsignacion){
+                                textArea.append(((NodoAsignacion)raiz).getIdentificador() + ":=");
+                            }
+                            else{
+                                if (raiz instanceof NodoOperacion){
+                                    Tokens operacion = ((NodoOperacion) raiz).getOperacion();
 
-                                  if(operacion == Tokens.Menor){
-                                      textArea.append("<"); 
-                                  }
+                                    if(operacion == Tokens.Menor){
+                                        textArea.append("<"); 
+                                    }
 
-                                  if(operacion == Tokens.Mayor){
-                                      textArea.append(">");
-                                  }
+                                    if(operacion == Tokens.Mayor){
+                                        textArea.append(">");
+                                    }
 
-                                  if(operacion == Tokens.Menor_igual){
-                                      textArea.append("<="); 
-                                  }
+                                    if(operacion == Tokens.Menor_igual){
+                                        textArea.append("<="); 
+                                    }
 
-                                  if(operacion == Tokens.Mayor_igual){
-                                      textArea.append(">="); 
-                                  }
+                                    if(operacion == Tokens.Mayor_igual){
+                                        textArea.append(">="); 
+                                    }
 
-                                  if(operacion == Tokens.Igual){
-                                      textArea.append("=");
-                                  }
+                                    if(operacion == Tokens.Igual){
+                                        textArea.append("=");
+                                    }
 
-                                  if(operacion == Tokens.Y_logico){
-                                      textArea.append("Y");
-                                  }
+                                    if(operacion == Tokens.Y_logico){
+                                        textArea.append("Y");
+                                    }
 
-                                  if(operacion == Tokens.O_logico){
-                                      textArea.append("O");
-                                  }
+                                    if(operacion == Tokens.O_logico){
+                                        textArea.append("O");
+                                    }
 
-                                  if(operacion == Tokens.Negacion_logica){
-                                      textArea.append("!");
-                                  }
+                                    if(operacion == Tokens.Negacion_logica){
+                                        textArea.append("!");
+                                    }
 
-                                  if(operacion == Tokens.Diferencia){
-                                      textArea.append("<>");
-                                  }
+                                    if(operacion == Tokens.Diferencia){
+                                        textArea.append("<>");
+                                    }
 
-                                  if(operacion == Tokens.Suma){
-                                      textArea.append("+");
-                                  }
+                                    if(operacion == Tokens.Suma){
+                                        textArea.append("+");
+                                    }
 
-                                  if(operacion == Tokens.Resta){
-                                      textArea.append("-");
-                                  }
+                                    if(operacion == Tokens.Resta){
+                                        textArea.append("-");
+                                    }
 
-                                  if(operacion == Tokens.Multiplicacion){
-                                      textArea.append("*");
-                                  }        
+                                    if(operacion == Tokens.Multiplicacion){
+                                        textArea.append("*");
+                                    }        
 
-                                  if(operacion == Tokens.Division){
-                                      textArea.append("/");
-                                  }
+                                    if(operacion == Tokens.Division){
+                                        textArea.append("/");
+                                    }
 
-                              }
-                              else{
-                                  if (raiz instanceof NodoNumero){
-                                      textArea.append("" + ((NodoNumero)raiz).getNumero());
-                                  }
-                                  else{
-                                      if(raiz instanceof NodoIdentificador ){
-                                          textArea.append(((NodoIdentificador)raiz).getIdentificador());
-                                      }
-                                  }
-                              }
+                                }
+                                else{
+                                    if (raiz instanceof NodoNumero){
+                                        textArea.append("" + ((NodoNumero)raiz).getNumero());
+                                    }
+                                    else{
+                                        if(raiz instanceof NodoIdentificador ){
+                                            textArea.append(((NodoIdentificador)raiz).getIdentificador());
+                                        }
+                                    }
+                                }
+                            }
+                              
                           }
                       }
                   }
