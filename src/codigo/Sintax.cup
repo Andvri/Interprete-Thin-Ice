@@ -125,7 +125,7 @@ OPERADOR_RELACIONAL ::= Mayor:mayor {: RESULT=Tokens.Mayor; :}
                         | Menor:menor {: RESULT=Tokens.Menor; :} 
                         | Menor_igual:menor_i {: RESULT=Tokens.Menor_igual; :} 
                         | Igual:igual {: RESULT=Tokens.Igual; :} 
-                        Diferencia:dif {: RESULT=Tokens.Diferencia; :};
+                        | Diferencia:dif {: RESULT=Tokens.Diferencia; :};
 
 OPERADOR_LOGICO ::= Y_logico:y_log {: RESULT=Tokens.Y_logico; :}
                     | O_logico:o_log {: RESULT=Tokens.O_logico; :};
@@ -181,6 +181,6 @@ OPERACION_LOGICA ::= OPERACION_LOGICA:operI OPERADOR_LOGICO:op OPERACION_RELACIO
 CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg);:}
                    | Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c Sino Llave_a SEGMENTO:segSiNo Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg,(NodoBase) segSiNo);:};
 
-CICLO_PARA ::= Para Parentesis_a OPERACION_LOGICA Punto_coma OPERACION_LOGICA Punto_coma OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
+CICLO_PARA ::= Para Parentesis_a SEGMENTO:inic Punto_coma SEGMENTO:paso Punto_coma OPERACION_LOGICA:verif Parentesis_c Llave_a SEGMENTO:seg Llave_c {: RESULT= new NodoPara((NodoBase) inic, (NodoBase) paso, (NodoBase) verif, (NodoBase) seg); :};
 
-CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OPERACION_LOGICA Punto_coma;
+CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO:seg Hasta Que OPERACION_LOGICA:cond Punto_coma {:RESULT = new NodoSi((NodoBase) cond, (NodoBase) seg);:};

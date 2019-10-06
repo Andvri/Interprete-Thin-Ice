@@ -48,8 +48,14 @@ public class FormSintax extends javax.swing.JFrame {
                 + "\n"
                 + "    entero i[10]\n"
                 + "    \n"
+                + "    para (a := 3; b := 4; 3 > 5) {\n"
+                + "        entero d := 5\n"
+                + "    }\n"
+                + "    repita \n"
+                + "       a := 3 \n"
+                + "     hasta que d = 5;\n"
                 + "}");
-
+        int x;
         analizar();
         inputText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
