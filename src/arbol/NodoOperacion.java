@@ -24,20 +24,19 @@ public class NodoOperacion extends NodoBase {
             this.Operacion = Operacion;
     }
     
+    public NodoOperacion(Tokens Operacion, NodoBase OpD) {
+            super();
+            this.OpI = null;
+            this.OpD = OpD;
+            this.Operacion = Operacion;
+    }
+    
     public NodoOperacion() {
             super();
             this.OpI = null;
             this.OpD = null;
             this.Operacion = null;
     }
-
-    /*
-    public NodoOperacion(Tokens Operacion) {
-            super();
-            this.OpI = null;
-            this.OpD = null;
-            this.Operacion = Operacion;
-    }*/
 
     public NodoBase getOpI() {
             return OpI;

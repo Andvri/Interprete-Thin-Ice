@@ -12,27 +12,27 @@ package arbol;
 public class NodoDefinicion extends NodoBase{
     private String Identificador;
     private String TipoVariable;
-    private boolean IsVector;
+    private NodoBase IndiceVector;
 
     public NodoDefinicion(String Identificador, String TipoVariable) {
         super();
         this.Identificador = Identificador;
         this.TipoVariable = TipoVariable;
-        this.IsVector = false;
+        this.IndiceVector = null;
     }
     
-    public NodoDefinicion(String Identificador, String TipoVariable, boolean IsVector) {
+    public NodoDefinicion(String Identificador, String TipoVariable, NodoBase IndiceVector) {
         super();
         this.Identificador = Identificador;
         this.TipoVariable = TipoVariable;
-        this.IsVector = IsVector;
+        this.IndiceVector = IndiceVector;
     }
     
     public NodoDefinicion() {
         super();
         this.Identificador = null;
         this.TipoVariable = null;
-        this.IsVector = false;
+        this.IndiceVector = null;
     }
 
     public String getIdentificador() {
@@ -51,11 +51,11 @@ public class NodoDefinicion extends NodoBase{
        this.TipoVariable = TipoVariable;
     }
     
-    public boolean getIsVector() {
-        return IsVector;
+    public NodoBase getIndiceVector() {
+        return IndiceVector;
     }
     
-    public void setIsVector(boolean IsVector){
-        this.IsVector = IsVector;
+    public void setIndiceVector(NodoBase IndiceVector){
+        this.IndiceVector = IndiceVector;
     }
 }

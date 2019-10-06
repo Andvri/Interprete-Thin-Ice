@@ -138,44 +138,49 @@ OPERADOR_MULT ::= Multiplicacion:mult {: RESULT=Tokens.Multiplicacion; :}
 
 TIPO_VARIABLE ::= Entero:entero {: RESULT=entero; :}
             | Logico:logico {: RESULT=logico; :};
+
 DEFINICION_VARIABLE ::= TIPO_VARIABLE:tipo Identificador:id {: RESULT= new NodoDefinicion(id.toString(), tipo.toString()); :}
-              | TIPO_VARIABLE Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
+              | TIPO_VARIABLE:tipo Identificador:id Corchete_a OPERACION_ARITMETICA:oper Corchete_c {: RESULT= new NodoDefinicion(id.toString(), tipo.toString(), (NodoBase) oper); :};
+
 AS_VARIABLE ::= DEFINICION_VARIABLE:def Asignacion OPERACION:asig {:
                     NodoAsignacion nodo = new NodoAsignacion(((NodoDefinicion)def).getIdentificador(), (NodoBase) asig);
                     ((NodoDefinicion)def).setHermanoD(nodo);
                     RESULT= (NodoDefinicion)def;
                 :}
                 | Identificador:id Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig); :}
-                | Identificador Corchete_a OPERACION_ARITMETICA Corchete_c Asignacion OPERACION;
-
-
+                | Identificador:id Corchete_a OPERACION_ARITMETICA:indice Corchete_c Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig, (NodoBase) indice); :};
 
 OPERACION ::= OPERACION_LOGICA:oper {: RESULT=oper; :};
+
 ELEMENTO ::= Numero:num {: RESULT= new NodoNumero(num.toString()); :} 
             | Identificador:id {: RESULT= new NodoIdentificador(id.toString()); :}   
             | Resta Numero:num {: RESULT= new NodoNumero("-" + num.toString()); :}   
-            | Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
+            | Identificador:id Corchete_a OPERACION_ARITMETICA:op Corchete_c {: RESULT= new NodoIdentificador(id.toString(), (NodoBase) op); :};
 
 FACTOR ::= Parentesis_a OPERACION_LOGICA:oper Parentesis_c {: RESULT= oper; :}  
-        | Negacion_logica Parentesis_a OPERACION_LOGICA:oper Parentesis_c  {: RESULT= oper; :} 
+        | Negacion_logica Parentesis_a OPERACION_LOGICA:operD Parentesis_c  {: RESULT= new NodoOperacion(Tokens.Negacion_logica, (NodoBase) operD); :} 
         | ELEMENTO:elem {: RESULT= elem; :}  
-        | Negacion_logica ELEMENTO:elem {: RESULT= elem; :};
+        | Negacion_logica ELEMENTO:operD {: RESULT= new NodoOperacion(Tokens.Negacion_logica, (NodoBase) operD); :};
         
 OPERACION_ARITMETICA ::= OPERACION_ARITMETICA:operI OPERADOR_SUMA:op TERM:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD); :}
                     | TERM:term {: RESULT= term; :};
+
 TERM ::= TERM:operI OPERADOR_MULT:op OPERACION_MOD:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD); :}
         | OPERACION_MOD:mod {: RESULT= mod; :};
+
 OPERACION_MOD ::= OPERACION_MOD:operI Modulo:op FACTOR:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD); :}
                 | FACTOR:fact {: RESULT= fact; :} ;
 
 OPERACION_RELACIONAL ::= OPERACION_ARITMETICA:operI  OPERADOR_RELACIONAL:op OPERACION_ARITMETICA:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD); :}
                 | OPERACION_ARITMETICA:oper {: RESULT= oper; :};
+
 OPERACION_LOGICA ::= OPERACION_LOGICA:operI OPERADOR_LOGICO:op OPERACION_RELACIONAL:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD); :}  
                 | OPERACION_RELACIONAL:oper {: RESULT= oper; :};
 
 
 CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg);:}
-                   | Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
+                   | Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c Sino Llave_a SEGMENTO:segSiNo Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg,(NodoBase) segSiNo);:};
 
 CICLO_PARA ::= Para Parentesis_a OPERACION_LOGICA Punto_coma OPERACION_LOGICA Punto_coma OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
+
 CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OPERACION_LOGICA Punto_coma;

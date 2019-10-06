@@ -11,10 +11,17 @@ package arbol;
  */
 public class NodoIdentificador extends NodoBase{
     private String Identificador;
-
+    private NodoBase IndiceVector;
+    
     public NodoIdentificador(String Identificador) {
         super();
         this.Identificador = Identificador;
+    }
+    
+    public NodoIdentificador(String Identificador, NodoBase IndiceVector) {
+        super();
+        this.Identificador = Identificador;
+        this.IndiceVector = IndiceVector;
     }
 
     public NodoIdentificador() {
@@ -23,5 +30,13 @@ public class NodoIdentificador extends NodoBase{
 
     public String getIdentificador() {
         return Identificador;
+    }
+    
+    public NodoBase getIndiceVector() {
+        return IndiceVector;
+    }
+    
+    public void setIndiceVector(NodoBase IndiceVector){
+        this.IndiceVector = IndiceVector;
     }
 }

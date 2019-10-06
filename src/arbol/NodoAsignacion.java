@@ -12,6 +12,7 @@ package arbol;
 public class NodoAsignacion extends NodoBase{
     private String Identificador;
     private NodoBase Asignacion;
+    private NodoBase IndiceVector;
 
     public NodoAsignacion(String Identificador) {
         super();
@@ -24,7 +25,14 @@ public class NodoAsignacion extends NodoBase{
         this.Identificador = Identificador;
         this.Asignacion = Asignacion;
     }
-
+    
+    public NodoAsignacion(String Identificador, NodoBase Asignacion, NodoBase IndiceVector) {
+        super();
+        this.Identificador = Identificador;
+        this.Asignacion = Asignacion;
+        this.IndiceVector = IndiceVector;
+    }
+    
     public String getIdentificador() {
         return Identificador;
     }
@@ -39,5 +47,13 @@ public class NodoAsignacion extends NodoBase{
 
     public void setAsignacion(NodoBase Asignacion) {
         this.Asignacion = Asignacion;
+    }
+    
+    public NodoBase getIndiceVector() {
+        return IndiceVector;
+    }
+    
+    public void setIndiceVector(NodoBase IndiceVector){
+        this.IndiceVector = IndiceVector;
     }
 }

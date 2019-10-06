@@ -168,22 +168,46 @@ public class Imprimir {
                               imprimir(((NodoRepita)raiz).getCondicion(), textArea);
                           }
                           else{ 
-                              if (raiz instanceof  NodoAsignacion){
+                              if (raiz instanceof  NodoDefinicion){
+                                if(((NodoDefinicion)raiz).getIndiceVector() != null){
+                                   imprimirSangria(textArea);
+                                   textArea.append("--Indice_Vector--\n");
+                                   imprimir(((NodoDefinicion)raiz).getIndiceVector(), textArea);
+                                }  
+                              }
+                              else{
+                                if (raiz instanceof  NodoAsignacion){
                                   imprimirSangria(textArea);
                                   textArea.append("--Asignacion--\n");
                                   imprimir(((NodoAsignacion)raiz).getAsignacion(), textArea);
-                              }
-                              else{ 
-                                  if (raiz instanceof  NodoOperacion){
-                                      imprimirSangria(textArea);
-                                      textArea.append("--Operacion_Izquierda--\n");
-                                      imprimir(((NodoOperacion)raiz).getOpI(), textArea);
+                                  if(((NodoAsignacion)raiz).getIndiceVector() != null){
+                                   imprimirSangria(textArea);
+                                   textArea.append("--Indice_Vector--\n");
+                                   imprimir(((NodoAsignacion)raiz).getIndiceVector(), textArea);
+                                  } 
+                                }
+                                else{ 
+                                    if (raiz instanceof  NodoOperacion){
+                                        if(((NodoOperacion)raiz).getOpI() != null){
+                                            imprimirSangria(textArea);
+                                            textArea.append("--Operacion_Izquierda--\n");
+                                            imprimir(((NodoOperacion)raiz).getOpI(), textArea);
+                                        }
 
-                                      imprimirSangria(textArea);
-                                      textArea.append("--Operacion_Derecha--\n");
-                                      imprimir(((NodoOperacion)raiz).getOpD(), textArea);
-                                  }
+                                        imprimirSangria(textArea);
+                                        textArea.append("--Operacion_Derecha--\n");
+                                        imprimir(((NodoOperacion)raiz).getOpD(), textArea);
+                                    }
+                                    if (raiz instanceof  NodoIdentificador){
+                                        if(((NodoIdentificador)raiz).getIndiceVector() != null){
+                                         imprimirSangria(textArea);
+                                         textArea.append("--Indice_Vector--\n");
+                                         imprimir(((NodoIdentificador)raiz).getIndiceVector(), textArea);
+                                        } 
+                                    }
+                                }
                               }
+                              
                           }
                       }
                   }
