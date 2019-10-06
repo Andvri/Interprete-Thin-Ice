@@ -7,6 +7,7 @@ package codigo;
 
 import arbol.*;
 import java.util.HashMap;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -14,10 +15,12 @@ import java.util.HashMap;
  */
 public class TablaSimbolos {
     private HashMap<String, ElementoTablaS> tabla;
+    static int numSent;
     
     public TablaSimbolos() {
         super();
         tabla = new HashMap<String, ElementoTablaS>();
+        numSent = 0;
     }
     
      public void cargar(NodoBase raiz){
@@ -25,9 +28,11 @@ public class TablaSimbolos {
             
             if (raiz instanceof  NodoDefinicion){
                 NodoDefinicion nodoD = (NodoDefinicion)raiz; 
-                insertar(nodoD.getIdentificador(), nodoD.getTipoDato(), nodoD.getIndiceVector());
+                insertar(nodoD.getIdentificador(), nodoD.getTipoDato(), nodoD.getIndiceVector(), numSent);
             }
-           
+            
+            numSent++;
+            
             if (raiz instanceof  NodoPrograma){
               cargar(((NodoPrograma)raiz).getSegmento());
             }
@@ -91,17 +96,17 @@ public class TablaSimbolos {
         }
     }
     
-    public boolean insertar(String identificador, TiposIds tipo, NodoBase indiceVector){
+    public boolean insertar(String identificador, TiposIds tipo, NodoBase indiceVector, int numSent){
         ElementoTablaS elemento;
         
         if(tabla.containsKey(identificador)){
             return false;
         }else{
             if(indiceVector == null){
-                elemento = new ElementoTablaS(identificador, tipo);
+                elemento = new ElementoTablaS(identificador, tipo, numSent);
             }
             else{
-                elemento = new ElementoTablaS(identificador, tipo, true);
+                elemento = new ElementoTablaS(identificador, tipo, numSent, true);
             }
             
             tabla.put(identificador, elemento);
@@ -113,10 +118,10 @@ public class TablaSimbolos {
         return (ElementoTablaS)tabla.get(identificador);
     }
     
-    public void imprimir(){
-        System.out.println("Tabla de Simbolos");
-        for (String i : tabla.keySet()) {
-            System.out.println("id: " + i + " tipo: " + tabla.get(i).getTipo() + " isVector: " + tabla.get(i).getIsVector());
-        }
+    public void imprimir(JTextArea txt){
+        txt.append("Tabla de Simbolos\n");
+        tabla.keySet().forEach((i) -> {
+            txt.append("id: " + i + " tipo: " + tabla.get(i).getTipo() + " isVector: " + tabla.get(i).getIsVector() + " numSent: " + tabla.get(i).getNumSent() + "\n");
+        });
     }
 }

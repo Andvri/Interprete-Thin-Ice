@@ -98,6 +98,8 @@ public class FormSintax extends javax.swing.JFrame {
         txtAnalizarSin = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtAnalizarLex = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtTablaS = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -204,31 +206,40 @@ public class FormSintax extends javax.swing.JFrame {
         txtAnalizarLex.setRows(5);
         jScrollPane3.setViewportView(txtAnalizarLex);
 
+        txtTablaS.setColumns(20);
+        txtTablaS.setRows(5);
+        jScrollPane4.setViewportView(txtTablaS);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(analizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(analizar)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
+                            .addComponent(analizar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -304,13 +315,16 @@ public class FormSintax extends javax.swing.JFrame {
             NodoBase raiz= s.getNodoBase();
             Imprimir.imprimir(raiz, txtAnalizarSin);
             
+            
+            txtTablaS.setText("");
             TablaSimbolos ts = new TablaSimbolos();
             ts.cargar(raiz);
-            ts.imprimir();
+            ts.imprimir(txtTablaS);
             
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
             Symbol sym = s.getS();
+            txtTablaS.setText("Tabla de Simbolos");
             txtAnalizarSin.setText("Error de Sintaxis. Linea: " + (sym.right + 1) + " Columna:" + (sym.left + 1) + " Error:\"" + sym.value + "\"");
             txtAnalizarSin.setForeground(Color.red);
         }
@@ -402,7 +416,9 @@ public class FormSintax extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea txtAnalizarLex;
     private javax.swing.JTextArea txtAnalizarSin;
+    private javax.swing.JTextArea txtTablaS;
     // End of variables declaration//GEN-END:variables
 }
