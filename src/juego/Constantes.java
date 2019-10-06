@@ -15,6 +15,9 @@ public interface Constantes {
    public int ANCHO_CODIGO = 10;
    public int ALTO = 17;
    
+   public int COLUMNAS_JUEGO = 19;
+   public int FILAS_JUEGO = 15;
+   
    
    public int ANCHO_CONTENEDOR_CODIGO = PIXEL * ANCHO_CODIGO;
    public int ANCHO_CONTENEDOR_JUEGO = PIXEL * ANCHO_JUEGO;

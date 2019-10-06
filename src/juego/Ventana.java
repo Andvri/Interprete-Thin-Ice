@@ -27,27 +27,21 @@ public class Ventana extends JFrame implements Constantes {
         setSize(new Dimension(ANCHO_VENTANA, ALTO_VENTANA));
 
         
-        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
-        
-        
-        this.cj = new ContenedorJuego();
         this.cc = new ContenedorCodigo();
+        this.cj = new ContenedorJuego(this.cc.getOutput());
+        
         this.cj.setBackground(new Color(128, 188, 252));
         this.cc.setBackground(new Color(128, 188, 252));
         setBackground(new Color(128, 188, 252));
         
+        
         add(this.cj);
-        
-        
-        
-        
-        
         add(this.cc);
-
         setVisible(true);
-
+        
+        
         setResizable(false);
 
         

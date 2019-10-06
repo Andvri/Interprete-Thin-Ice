@@ -4,19 +4,257 @@
  * and open the template in the editor.
  */
 package juego;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 /**
  *
  * @author andvri
  */
 public class ContenedorJuego extends JPanel  implements Constantes{
+    private JPanel SubContenedor;
+    private JPanel HeaderContenedor;
+    private JPanel FooterContenedor;
+    private JTextArea outputTextArea;
+    private int x = 0;
+    private int y = 0;
+    private  JPanel [][] mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
+    private final int [][] mapaLogico = {
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1,  4, -1, -2, -2, -2},
+        {-2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  1, -1, -1, -1, -2},
+        {-2, -1, -1, -1, -1,  1,  1,  1,  1,  1,  1,  1,  1, -1,  1,  1,  1, -1, -2},
+        {-2, -1,  5,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1,  1,  1,  1, -1, -2},
+        {-2, -1, -1, -1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -2},
+        {-2, -2, -2, -1, -1, -1, -1,  1,  1,  1, -1, -1, -1, -1, -1, -1, -1, -1, -2},
+        {-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2},
+        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2}
+    }; 
     
     
-    public ContenedorJuego () {
+    public ContenedorJuego (JTextArea outputTextArea) {
         setPreferredSize(new Dimension(ANCHO_CONTENEDOR_JUEGO, ALTO_VENTANA));
         setBounds(0, 0, ANCHO_CONTENEDOR_JUEGO, ALTO_VENTANA);
+ 
+        BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        setLayout(layout);
         
+        this.HeaderContenedor = new JPanel();
+        this.SubContenedor = new JPanel();
+        this.FooterContenedor = new JPanel();
+        
+        this.HeaderContenedor.setSize(ANCHO_CONTENEDOR_JUEGO, PIXEL);
+        this.SubContenedor.setSize(ANCHO_CONTENEDOR_JUEGO, ALTO_VENTANA - (2*PIXEL));
+        this.FooterContenedor.setSize(ANCHO_CONTENEDOR_JUEGO, PIXEL);
+        
+        this.HeaderContenedor.setMaximumSize(new Dimension(ANCHO_CONTENEDOR_JUEGO, PIXEL));
+        this.SubContenedor.setMaximumSize(new Dimension(ANCHO_CONTENEDOR_JUEGO, ALTO_VENTANA - (3*PIXEL)));
+        this.FooterContenedor.setMaximumSize(new Dimension(ANCHO_CONTENEDOR_JUEGO, PIXEL));
+
+        this.HeaderContenedor.setBackground(new Color(128, 188, 252));
+        this.SubContenedor.setBackground(Color.white);
+        this.FooterContenedor.setBackground(new Color(128, 188, 252));
+        
+        add(this.HeaderContenedor);
+        add(this.SubContenedor);
+        add(this.FooterContenedor);
+        generarMapa();
+        
+        this.outputTextArea = outputTextArea;
+        
+        outputTextArea.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                ejecutarCambios();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                ejecutarCambios();
+            }
+        });
+    }
+    
+
+    public void mirarArriba() {
+        mirar(0,-1);
+    }
+    
+    public void mirarAbajo() {
+        mirar(0,1);
+    }
+    
+    public void mirarIzquierda() {
+        mirar(-1,0);
+    }
+    
+    public void mirarDerecha() {
+        mirar(1,0);
+    }
+    
+    public void mirar(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void avanzar (int pasos) {
+        int [] p = getPosicion();
+        if (verificarTrayectoria(p) && pasos > 0 && p[0] != -1) {
+            actualizarGrafico(p[1],p[0],0);
+            actualizarGrafico(p[1]+this.x,p[0]+this.y,5);
+            avanzar(pasos-1);
+        }
+    }
+    
+    public void actualizarGrafico(int i, int j, int value){
+        int tmp = j;
+        j = i;
+        i = tmp;
+        mapaLogico[i][j] = value;
+        switch(value) {
+                    case -2: {
+                        mapaGrafico[i][j].setBackground(Color.yellow);
+                        break;
+                    }
+                    case -1: {
+                        mapaGrafico[i][j].setBackground(Color.blue);
+                        break;
+                    }
+                    case 1: {
+                        mapaGrafico[i][j].setBackground(Color.red);
+                        break;
+                    }
+                    case 5: {
+                        mapaGrafico[i][j].setBackground(Color.orange);
+                        break;
+                    }
+                    case 0: {
+                        mapaGrafico[i][j].setBackground(Color.PINK);
+                        break;
+                    }
+                    default: {
+                        mapaGrafico[i][j].setBackground(new Color(i+j,i*j,i^j));
+                    }
+                }
+    }
+    
+    public boolean verificarTrayectoria(int [] p) {
+        return mapaLogico[p[0]+this.y][p[1]+this.x] == 1;
+    }
+    
+    public void ejecutarCambios()  {
+        String []lineas = this.outputTextArea.getText().split("\n");
+        for (String linea : lineas) 
+        { 
+            
+                    ejecutarLinea(linea);  
+            
+        }
+    }
+    
+    public int[] getPosicion () {
+        int [] pos = {-1,-1};
+        for (int i=0; i < FILAS_JUEGO ; i++) {
+            for (int j=0; j< COLUMNAS_JUEGO; j++) {
+                if (mapaLogico[i][j] == 5) {
+                    pos[0] = i;
+                    pos[1] = j;
+                    return pos;
+                }
+            }
+        }    
+        return pos;
+    }
+    
+    
+    
+    public void generarMapa () {
+        
+
+
+        JPanel mapa = this.SubContenedor;
+        mapa.setLayout(new GridLayout(FILAS_JUEGO,COLUMNAS_JUEGO));
+        
+        for (int i=0; i < FILAS_JUEGO ; i++) {
+            for (int j=0; j< COLUMNAS_JUEGO; j++) {
+                JPanel lo = new JPanel();
+                Color p;              
+                switch(mapaLogico[i][j]) {
+                    case -2: {
+                        p = Color.yellow;
+                        break;
+                    }
+                    case -1: {
+                        p = Color.blue;
+                        break;
+                    }
+                    case 1: {
+                        p = Color.red;
+                        break;
+                    }
+                    case 5: {
+                        p = Color.orange;
+                        break;
+                    }
+                    default: {
+                        p = new Color(i+j,i*j,i^j);
+                    }
+                }
+                lo.setBackground(p);
+                this.mapaGrafico[i][j] = lo;
+                mapa.add(lo);
+            }
+        }
+    }
+
+    public void ejecutarLinea(String linea) {
+        switch(linea){
+            case "mirarArriba()": {
+                mirarArriba();
+                break;
+            }
+            case "mirarAbajo()": {
+                mirarAbajo();
+                break;
+            }
+            case "mirarIzquierda()": {
+                mirarIzquierda();
+                break;
+            }
+            case "mirarDerecha()": {
+                mirarDerecha();
+                break;
+            }
+            default: {
+                if(linea.matches("avanzar\\([0-9]+\\)")) {
+                    linea = linea.replaceAll("[^0-9]", "");
+                    final int pasos = Integer.parseInt(linea);
+                    avanzar(pasos);
+                } else {
+                    System.out.println("ERROR:" + linea);
+                }
+                
+            }
+            
+        }
     }
 }

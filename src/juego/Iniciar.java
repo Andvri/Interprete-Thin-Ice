@@ -10,6 +10,7 @@ package juego;
  * @author andvri
  */
 public class Iniciar {
+
     /**
      * @param args the command line arguments
      */

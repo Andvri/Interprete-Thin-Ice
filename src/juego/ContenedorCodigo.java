@@ -18,6 +18,7 @@ import javax.swing.*;
 public class ContenedorCodigo extends JPanel implements Constantes, MouseListener {
     private JTextArea displayInput;
     private JTextArea displayOutput;
+    private JButton generar;
     
     public ContenedorCodigo() {
         setPreferredSize(new Dimension(ANCHO_CONTENEDOR_CODIGO, ALTO_VENTANA));
@@ -31,8 +32,18 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
         
         JButton generar = new JButton("Generar");
         
-        this.displayOutput = new JTextArea();
+        this.displayOutput = new JTextArea(); 
         this.displayInput = new JTextArea();
+        this.displayInput.setText(
+            "mirarDerecha()\n" +
+            "avanzar(7)\n" +
+            "mirarAbajo()\n" +
+            "avanzar(2)\n" +
+            "mirarIzquierda()\n" +
+            "avanzar(1)\n" +
+            "mirarArriba()\n" +
+            "avanzar(4)"
+        );
         
         JScrollPane scrollInput = new JScrollPane(this.displayInput);
         JScrollPane scrollOutput = new JScrollPane(this.displayOutput);
@@ -84,6 +95,11 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
         add(scrollOutput);
         add(generar);
         add(salidaLabel);
+        this.generar = generar;
+    }
+     
+    public JTextArea getOutput() {
+        return this.displayOutput;
     }
 
     @Override
