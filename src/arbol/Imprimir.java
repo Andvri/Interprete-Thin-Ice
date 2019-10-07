@@ -102,12 +102,17 @@ public class Imprimir {
 
                                 }
                                 else{
-                                    if (raiz instanceof NodoNumero){
-                                        textArea.append("" + ((NodoNumero)raiz).getNumero());
+                                    if(raiz instanceof NodoFuncion){
+                                        textArea.append("funcion: " + ((NodoFuncion)raiz).getIdentificador());
                                     }
                                     else{
-                                        if(raiz instanceof NodoIdentificador ){
-                                            textArea.append(((NodoIdentificador)raiz).getIdentificador());
+                                        if (raiz instanceof NodoNumero){
+                                            textArea.append("" + ((NodoNumero)raiz).getNumero());
+                                        }
+                                        else{
+                                            if(raiz instanceof NodoIdentificador ){
+                                                textArea.append(((NodoIdentificador)raiz).getIdentificador());
+                                            }
                                         }
                                     }
                                 }
@@ -201,12 +206,23 @@ public class Imprimir {
                                         textArea.append("--Operacion_Derecha--\n");
                                         imprimir(((NodoOperacion)raiz).getOpD(), textArea);
                                     }
-                                    if (raiz instanceof  NodoIdentificador){
-                                        if(((NodoIdentificador)raiz).getIndiceVector() != null){
-                                         imprimirSangria(textArea);
-                                         textArea.append("--Indice_Vector--\n");
-                                         imprimir(((NodoIdentificador)raiz).getIndiceVector(), textArea);
-                                        } 
+                                    else{
+                                        if (raiz instanceof  NodoIdentificador){
+                                            if(((NodoIdentificador)raiz).getIndiceVector() != null){
+                                             imprimirSangria(textArea);
+                                             textArea.append("--Indice_Vector--\n");
+                                             imprimir(((NodoIdentificador)raiz).getIndiceVector(), textArea);
+                                            } 
+                                        }
+                                        else{
+                                            if (raiz instanceof  NodoFuncion){
+                                                if(((NodoFuncion)raiz).getParametro() != null){
+                                                 imprimirSangria(textArea);
+                                                 textArea.append("--Parametro_Funcion--\n");
+                                                 imprimir(((NodoFuncion)raiz).getParametro(), textArea);
+                                                } 
+                                            }
+                                        }
                                     }
                                 }
                               }

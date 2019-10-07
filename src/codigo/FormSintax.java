@@ -28,6 +28,8 @@ public class FormSintax extends javax.swing.JFrame {
      */
     public FormSintax() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         inputText.setText(""
                 + "programa () {\n"
                 + "    entero a\n"
