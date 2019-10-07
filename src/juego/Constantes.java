@@ -19,6 +19,10 @@ public interface Constantes {
    public int FILAS_JUEGO = 15;
    
    
+   public String PROJECTPATH = System.getProperty("user.dir");
+   public String IMAGENESPATH = PROJECTPATH + "/src/recursos/imagenes/";
+   
+   
    public int ANCHO_CONTENEDOR_CODIGO = PIXEL * ANCHO_CODIGO;
    public int ANCHO_CONTENEDOR_JUEGO = PIXEL * ANCHO_JUEGO;
    

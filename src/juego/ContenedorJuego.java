@@ -7,9 +7,13 @@ package juego;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -21,6 +25,13 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     private JPanel SubContenedor;
     private JPanel HeaderContenedor;
     private JPanel FooterContenedor;
+    private BufferedImage imageJugador;
+    private BufferedImage imageMuro;
+    private BufferedImage imageInactivo;
+    private BufferedImage imageAgua;
+    private BufferedImage imageHielo;
+    private BufferedImage imageLlegada;
+    
     private JTextArea outputTextArea;
     private int x = 0;
     private int y = 0;
@@ -65,13 +76,13 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         this.FooterContenedor.setMaximumSize(new Dimension(ANCHO_CONTENEDOR_JUEGO, PIXEL));
 
         this.HeaderContenedor.setBackground(new Color(128, 188, 252));
-        this.SubContenedor.setBackground(Color.white);
+        this.SubContenedor.setBackground(new Color(128, 188, 252));
         this.FooterContenedor.setBackground(new Color(128, 188, 252));
         
         add(this.HeaderContenedor);
         add(this.SubContenedor);
         add(this.FooterContenedor);
-        generarMapa();
+        
         
         this.outputTextArea = outputTextArea;
         
@@ -92,6 +103,21 @@ public class ContenedorJuego extends JPanel  implements Constantes{
                 ejecutarCambios();
             }
         });
+        
+        
+        
+        try {
+            this.imageJugador = ImageIO.read(new File(IMAGENESPATH + "bloque-player.png"));
+            this.imageAgua = ImageIO.read(new File(IMAGENESPATH + "bloque-agua.png"));
+            this.imageHielo = ImageIO.read(new File(IMAGENESPATH + "bloque-hielo.png"));
+            this.imageLlegada = ImageIO.read(new File(IMAGENESPATH + "bloque-llegada.png"));
+            this.imageMuro = ImageIO.read(new File(IMAGENESPATH + "bloque-muro.png"));
+            this.imageInactivo = ImageIO.read(new File(IMAGENESPATH + "bloque-inactivo.png"));
+            
+            generarMapa();
+        } catch (IOException ex) {
+            Logger.getLogger(ContenedorJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 
@@ -130,29 +156,32 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         j = i;
         i = tmp;
         mapaLogico[i][j] = value;
+        ImageIcon ii;
+        JLabel imagenInterna = (JLabel) mapaGrafico[i][j].getComponent(0);
         switch(value) {
                     case -2: {
-                        mapaGrafico[i][j].setBackground(Color.yellow);
+                        imagenInterna.setIcon(new ImageIcon(this.imageInactivo));
                         break;
                     }
                     case -1: {
-                        mapaGrafico[i][j].setBackground(Color.blue);
+                        imagenInterna.setIcon(new ImageIcon(this.imageMuro));
                         break;
                     }
                     case 1: {
-                        mapaGrafico[i][j].setBackground(Color.red);
+                        imagenInterna.setIcon(new ImageIcon(this.imageHielo));
                         break;
                     }
                     case 5: {
-                        mapaGrafico[i][j].setBackground(Color.orange);
+                        
+                        imagenInterna.setIcon(new ImageIcon(this.imageJugador));
                         break;
                     }
                     case 0: {
-                        mapaGrafico[i][j].setBackground(Color.PINK);
+                        imagenInterna.setIcon(new ImageIcon(this.imageAgua));
                         break;
                     }
                     default: {
-                        mapaGrafico[i][j].setBackground(new Color(i+j,i*j,i^j));
+                        imagenInterna.setIcon(new ImageIcon(this.imageLlegada));
                     }
                 }
     }
@@ -198,28 +227,47 @@ public class ContenedorJuego extends JPanel  implements Constantes{
             for (int j=0; j< COLUMNAS_JUEGO; j++) {
                 JPanel lo = new JPanel();
                 Color p;              
+                JLabel l;
+                ImageIcon ii;
                 switch(mapaLogico[i][j]) {
                     case -2: {
                         p = Color.yellow;
+                        ii = new ImageIcon(this.imageInactivo);
                         break;
                     }
                     case -1: {
                         p = Color.blue;
+                        ii = new ImageIcon(this.imageMuro);
                         break;
                     }
                     case 1: {
                         p = Color.red;
+                        ii = new ImageIcon(this.imageHielo);
                         break;
                     }
                     case 5: {
+                        ii = new ImageIcon(this.imageJugador);
                         p = Color.orange;
                         break;
                     }
                     default: {
                         p = new Color(i+j,i*j,i^j);
+                        ii = new ImageIcon(this.imageLlegada);
                     }
                 }
-                lo.setBackground(p);
+                
+                
+                    JLabel picLabel = new JLabel(ii);
+                    picLabel.setSize(PIXEL, PIXEL);
+                    picLabel.setBounds(0, 0, PIXEL,PIXEL);
+                    picLabel.setPreferredSize(new Dimension(PIXEL,PIXEL));
+                    lo.setLayout(null);
+                    lo.add(picLabel);
+                
+
+                //lo.setBackground(p);
+                //lo.setPreferredSize(new Dimension(PIXEL,PIXEL));
+                //lo.setSize(PIXEL,PIXEL);
                 this.mapaGrafico[i][j] = lo;
                 mapa.add(lo);
             }
