@@ -8,6 +8,7 @@ package codigo;
 import java.util.Vector;
 import arbol.*;
 import java.awt.Color;
+import java.util.HashSet;
 import javax.swing.JTextArea;
 
 /**
@@ -17,9 +18,16 @@ import javax.swing.JTextArea;
 public class Semantic {
     private Vector<String> errores;
     static int numSent;
+    HashSet<String> tiposFunc;
+    
     public Semantic() {
         errores = new Vector<String>();
         numSent = 0;
+        tiposFunc = new HashSet<String>();
+        
+        for (TiposFunc t : TiposFunc.values()) {
+            tiposFunc.add(t.name());
+        }
     }
     
     public void analizar(NodoBase raiz, TablaSimbolos tablaS) {
@@ -62,6 +70,14 @@ public class Semantic {
                     //Falta la verificacion de la verificacion
                 }
                 else{
+                    if(raiz instanceof NodoFuncion){
+                        NodoFuncion nodo = (NodoFuncion)raiz;
+                        
+                        if(!tiposFunc.contains(nodo.getIdentificador())){
+                            errores.add("la funcion " + nodo.getIdentificador() + " no existe.");
+                        }
+                        
+                    }
                 }
             }
                           
