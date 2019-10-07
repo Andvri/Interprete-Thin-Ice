@@ -28,7 +28,7 @@ public class Semantic {
         while (raiz != null) {
             
             if (raiz instanceof  NodoAsignacion){
-                NodoAsignacion nodo = ((NodoAsignacion)raiz);
+                NodoAsignacion nodo = (NodoAsignacion)raiz;
                 ElementoTablaS elem = tablaS.buscar(nodo.getIdentificador());
                 
                 if(!(elem != null && elem.getNumSent() <= numSent)){
@@ -36,16 +36,32 @@ public class Semantic {
                 }
                 else{
                     if(elem != null && elem.getIsVector() &&  nodo.getIndiceVector() == null){
-                        errores.add("uso incorrecto del vector "+((NodoAsignacion)raiz).getIdentificador()+" como variable simple.");
+                        errores.add("Uso incorrecto del vector "+((NodoAsignacion)raiz).getIdentificador()+" como variable simple.");
                     }
                     else{
                         if(elem != null && !elem.getIsVector() &&  nodo.getIndiceVector() != null){
-                            errores.add("uso incorrecto de la variable simple "+((NodoAsignacion)raiz).getIdentificador()+" como vector.");
+                            errores.add("Uso incorrecto de la variable simple "+((NodoAsignacion)raiz).getIdentificador()+" como vector.");
                         }
                     }
                 }
+                
+                //Falta verificacion del tipo cuando se asigna
             }
-            
+            else{
+                if(raiz instanceof NodoPara){
+                    NodoPara nodo = (NodoPara)raiz;
+                    
+                    if(!(nodo.getInicializador() instanceof NodoAsignacion)){
+                        errores.add("La inicializacion del ciclo para debe ser una asignacion");
+                    }
+                    
+                    if(!(nodo.getPaso()instanceof NodoAsignacion)){
+                        errores.add("El paso del ciclo para debe ser una asignacion");
+                    }
+                    
+                    //Falta la verificacion de la verificacion
+                }
+            }
                           
             numSent++;
             
