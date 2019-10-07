@@ -68,6 +68,20 @@ public class Semantic {
                                 errores.add("La variable " + ((NodoIdentificador)nodo.getAsignacion()).getIdentificador() + " no ha sido declarada.\n");
                             }
                         }
+                        else{
+                            if(nodo.getAsignacion() instanceof NodoNumero){
+                                if(elem.getTipo() != TiposIds.entero){
+                                    errores.add("La variable " + nodo.getIdentificador() + " es de tipo " + elem.getTipo() + " no se le puede asignar un valor de tipo entero.\n");
+                                }
+                            }
+                            else{
+                                if(nodo.getAsignacion() instanceof NodoBooleano){
+                                    if(elem.getTipo() != TiposIds.logico){
+                                        errores.add("La variable " + nodo.getIdentificador() + " es de tipo " + elem.getTipo() + " no se le puede asignar un valor de tipo logico.\n");
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 
@@ -94,13 +108,18 @@ public class Semantic {
                         if(nodo.getVerificacion() instanceof NodoIdentificador){
                             ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getVerificacion()).getIdentificador()); 
 
-                            if(elemId != null){
+                            if(elemId != null && elemId.getNumSent() <= numSent){
                                 if (elemId.getTipo() !=  TiposIds.logico) {
                                     errores.add("La verificacion del ciclo para debe ser una expresion logica.\n");
                                 }
                             }
                             else{
                                 errores.add("La variable " + ((NodoIdentificador)nodo.getVerificacion()).getIdentificador() + " no ha sido declarada.\n");
+                            }
+                        }
+                        else{
+                            if(nodo.getVerificacion() instanceof NodoNumero){
+                                errores.add("La verificacion del ciclo para debe ser una expresion logica.\n");
                             }
                         }
                     }
@@ -127,13 +146,18 @@ public class Semantic {
                                 if(nodo.getCondicion() instanceof NodoIdentificador){
                                     ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getCondicion()).getIdentificador()); 
 
-                                    if(elemId != null){
+                                    if(elemId != null && elemId.getNumSent() <= numSent){
                                         if (elemId.getTipo() !=  TiposIds.logico) {
                                             errores.add("La condicion del ciclo repita debe ser una expresion logica.\n");
                                         }
                                     }
                                     else{
                                         errores.add("La variable " + ((NodoIdentificador)nodo.getCondicion()).getIdentificador() + " no ha sido declarada.\n");
+                                    }
+                                }
+                                else{
+                                    if(nodo.getCondicion() instanceof NodoNumero){
+                                        errores.add("La condicion del ciclo repita debe ser una expresion logica.\n");
                                     }
                                 }
                             }
@@ -152,7 +176,7 @@ public class Semantic {
                                     if(nodo.getCondicion() instanceof NodoIdentificador){
                                         ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getCondicion()).getIdentificador()); 
 
-                                        if(elemId != null){
+                                        if(elemId != null && elemId.getNumSent() <= numSent){
                                             if (elemId.getTipo() !=  TiposIds.logico) {
                                                 errores.add("La condicion del si debe ser una expresion logica.\n");
                                             }
@@ -161,8 +185,31 @@ public class Semantic {
                                             errores.add("La variable " + ((NodoIdentificador)nodo.getCondicion()).getIdentificador() + " no ha sido declarada.\n");
                                         }
                                     }
+                                    else{
+                                        if(nodo.getCondicion() instanceof NodoNumero){
+                                            errores.add("La condicion del si debe ser una expresion logica.\n");
+                                        }
+                                    }
                                 }
                             //Falta la verificacion de la condicion cuando es un elemento simple
+                            }
+                            else {
+                                 if(raiz instanceof NodoIdentificador){
+                                    ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)raiz).getIdentificador());
+                                    if(elemId != null && elemId.getNumSent() <= numSent){
+                                        if(elemId.getIsVector() &&  ((NodoIdentificador)raiz).getIndiceVector() == null ){
+                                            errores.add("Uso incorrecto del vector "+((NodoIdentificador)raiz).getIdentificador()+" como variable simple.\n");
+                                        }
+                                        else{
+                                            if(!elemId.getIsVector() &&  ((NodoIdentificador)raiz).getIndiceVector() != null){
+                                                errores.add("Uso incorrecto de la variable simple "+((NodoIdentificador)raiz).getIdentificador()+" como vector.\n");
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        errores.add("La variable " + ((NodoIdentificador)raiz).getIdentificador() + " no ha sido declarada.\n");
+                                    }
+                                 }
                             }
                         }
                     }
