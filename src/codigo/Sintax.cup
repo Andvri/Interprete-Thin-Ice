@@ -186,4 +186,4 @@ CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SE
 
 CICLO_PARA ::= Para Parentesis_a SEGMENTO:inic Punto_coma SEGMENTO:paso Punto_coma OPERACION_LOGICA:verif Parentesis_c Llave_a SEGMENTO:seg Llave_c {: RESULT= new NodoPara((NodoBase) inic, (NodoBase) paso, (NodoBase) verif, (NodoBase) seg); :};
 
-CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO:seg Hasta Que OPERACION_LOGICA:cond Punto_coma {:RESULT = new NodoSi((NodoBase) cond, (NodoBase) seg);:};
+CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO:seg Hasta Que OPERACION_LOGICA:cond Punto_coma {:RESULT = new NodoRepita((NodoBase) cond, (NodoBase) seg);:};
