@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
  * @author kvnsnchz
  */
 public class Semantic {
-    private Vector<String> errores;
+    static Vector<String> errores;
     static int numSent;
     HashSet<String> tiposFunc;
     
@@ -31,7 +31,6 @@ public class Semantic {
     }
     
     public void analizar(NodoBase raiz, TablaSimbolos tablaS) {
-        errores.clear();
         
         while (raiz != null) {
             
@@ -119,7 +118,71 @@ public class Semantic {
             if (raiz instanceof  NodoPrograma){
               analizar(((NodoPrograma)raiz).getSegmento(), tablaS);
             }
-            //falta hacer la recursividad en los otros nodos
+            else{
+                 if (raiz instanceof  NodoSi){
+                    analizar(((NodoSi)raiz).getCondicion(), tablaS);
+                    analizar(((NodoSi)raiz).getSegmento(), tablaS);
+
+                    if(((NodoSi)raiz).getSino() != null){
+                            analizar(((NodoSi)raiz).getSino(), tablaS);
+                    }
+                  }
+                 else{ 
+                      if (raiz instanceof  NodoPara){
+                          analizar(((NodoPara)raiz).getInicializador(), tablaS);
+                          analizar(((NodoPara)raiz).getPaso(), tablaS);
+                          analizar(((NodoPara)raiz).getVerificacion(), tablaS);
+                          analizar(((NodoPara)raiz).getSegmento(), tablaS);
+                      }
+                      else{ 
+                          if (raiz instanceof  NodoRepita){
+                              analizar(((NodoRepita)raiz).getSegmento(), tablaS);
+                              analizar(((NodoRepita)raiz).getCondicion(), tablaS);
+                          }
+                          else{ 
+                              if (raiz instanceof  NodoDefinicion){
+                                if(((NodoDefinicion)raiz).getIndiceVector() != null){
+                                   analizar(((NodoDefinicion)raiz).getIndiceVector(), tablaS);
+                                }  
+                              }
+                              else{
+                                if (raiz instanceof  NodoAsignacion){
+                                  analizar(((NodoAsignacion)raiz).getAsignacion(), tablaS);
+                                  
+                                  if(((NodoAsignacion)raiz).getIndiceVector() != null){
+                                   analizar(((NodoAsignacion)raiz).getIndiceVector(), tablaS);
+                                  } 
+                                }
+                                else{ 
+                                    if (raiz instanceof  NodoOperacion){
+                                        if(((NodoOperacion)raiz).getOpI() != null){
+                                            analizar(((NodoOperacion)raiz).getOpI(), tablaS);
+                                        }
+                                        
+                                        analizar(((NodoOperacion)raiz).getOpD(), tablaS);
+                                    }
+                                    else{
+                                        if (raiz instanceof  NodoIdentificador){
+                                            if(((NodoIdentificador)raiz).getIndiceVector() != null){
+                                                analizar(((NodoIdentificador)raiz).getIndiceVector(), tablaS);
+                                            } 
+                                        }
+                                        else{
+                                            if (raiz instanceof  NodoFuncion){
+                                                if(((NodoFuncion)raiz).getParametro() != null){
+                                                    analizar(((NodoFuncion)raiz).getParametro(), tablaS);
+                                                } 
+                                            }
+                                        }
+                                    }
+                                }
+                              }
+                              
+                          }
+                      }
+                  }
+            }
+            
             raiz = raiz.getHermanoD();
         }
     }
