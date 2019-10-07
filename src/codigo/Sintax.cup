@@ -150,6 +150,9 @@ AS_VARIABLE ::= DEFINICION_VARIABLE:def Asignacion OPERACION:asig {:
                 | Identificador:id Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig); :}
                 | Identificador:id Corchete_a OPERACION_ARITMETICA:indice Corchete_c Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig, (NodoBase) indice); :};
 
+FUNCION ::= Identificador:id Parentesis_a OPERACION:parm Parentesis_c {: RESULT = new NodoFuncion(id.toString(), (NodoBase) parm); :}
+        | Identificador:id Parentesis_a Parentesis_c {: RESULT = new NodoFuncion(id.toString()); :};
+
 OPERACION ::= OPERACION_LOGICA:oper {: RESULT=oper; :};
 
 ELEMENTO ::= Numero:num {: RESULT= new NodoNumero(num.toString()); :} 

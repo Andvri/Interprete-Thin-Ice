@@ -61,6 +61,8 @@ public class Semantic {
                     
                     //Falta la verificacion de la verificacion
                 }
+                else{
+                }
             }
                           
             numSent++;
