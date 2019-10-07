@@ -74,9 +74,17 @@ public class Semantic {
                         NodoFuncion nodo = (NodoFuncion)raiz;
                         
                         if(!tiposFunc.contains(nodo.getIdentificador())){
-                            errores.add("la funcion " + nodo.getIdentificador() + " no existe.");
+                            errores.add("La funcion " + nodo.getIdentificador() + " no existe.");
                         }
                         
+                    }
+                    else{
+                        if(raiz instanceof NodoSi){
+                            NodoSi nodo = (NodoSi)raiz;
+                            if(((NodoOperacion)nodo.getCondicion()).getTipo() != TiposIds.logico){
+                                errores.add("La condicion del si debe ser una expresion logica.");
+                            }
+                        }
                     }
                 }
             }
@@ -86,7 +94,7 @@ public class Semantic {
             if (raiz instanceof  NodoPrograma){
               analizar(((NodoPrograma)raiz).getSegmento(), tablaS);
             }
-            
+            //falta hacer la recursividad en los otros nodos
             raiz = raiz.getHermanoD();
         }
     }

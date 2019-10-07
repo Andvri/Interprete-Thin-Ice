@@ -5,6 +5,7 @@
  */
 package arbol;
 
+import codigo.TiposIds;
 import codigo.Tokens;
 
 /**
@@ -16,19 +17,22 @@ public class NodoOperacion extends NodoBase {
     private NodoBase OpI;
     private NodoBase OpD;
     private Tokens Operacion;
-
-    public NodoOperacion(NodoBase OpI, Tokens Operacion, NodoBase OpD) {
+    private TiposIds tipo;
+    
+    public NodoOperacion(NodoBase OpI, Tokens Operacion, NodoBase OpD, TiposIds tipo) {
             super();
             this.OpI = OpI;
             this.OpD = OpD;
             this.Operacion = Operacion;
+            this.tipo = tipo;
     }
     
-    public NodoOperacion(Tokens Operacion, NodoBase OpD) {
+    public NodoOperacion(Tokens Operacion, NodoBase OpD, TiposIds tipo) {
             super();
             this.OpI = null;
             this.OpD = OpD;
             this.Operacion = Operacion;
+            this.tipo = tipo;
     }
     
     public NodoOperacion() {
@@ -36,6 +40,7 @@ public class NodoOperacion extends NodoBase {
             this.OpI = null;
             this.OpD = null;
             this.Operacion = null;
+            this.tipo = null;
     }
 
     public NodoBase getOpI() {
@@ -57,4 +62,13 @@ public class NodoOperacion extends NodoBase {
     public Tokens getOperacion() {
             return Operacion;
     }
+
+    public TiposIds getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TiposIds tipo) {
+        this.tipo = tipo;
+    }
+ 
 }
