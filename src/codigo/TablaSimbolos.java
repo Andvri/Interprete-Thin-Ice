@@ -119,7 +119,6 @@ public class TablaSimbolos {
     }
     
     public void imprimir(JTextArea txt){
-        txt.append("Tabla de Simbolos\n");
         tabla.keySet().forEach((i) -> {
             txt.append("id: " + i + " tipo: " + tabla.get(i).getTipo() + " isVector: " + tabla.get(i).getIsVector() + " numSent: " + tabla.get(i).getNumSent() + "\n");
         });
