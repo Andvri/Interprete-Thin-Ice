@@ -28,11 +28,24 @@ public class Semantic {
         while (raiz != null) {
             
             if (raiz instanceof  NodoAsignacion){
-                ElementoTablaS elem = tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
+                NodoAsignacion nodo = ((NodoAsignacion)raiz);
+                ElementoTablaS elem = tablaS.buscar(nodo.getIdentificador());
+                
                 if(!(elem != null && elem.getNumSent() <= numSent)){
-                    errores.add("La variable "+((NodoAsignacion)raiz).getIdentificador()+" no ha sido definida.");
+                    errores.add("La variable "+nodo.getIdentificador()+" no ha sido declarada.");
+                }
+                else{
+                    if(elem != null && elem.getIsVector() &&  nodo.getIndiceVector() == null){
+                        errores.add("uso incorrecto del vector "+((NodoAsignacion)raiz).getIdentificador()+" como variable simple.");
+                    }
+                    else{
+                        if(elem != null && !elem.getIsVector() &&  nodo.getIndiceVector() != null){
+                            errores.add("uso incorrecto de la variable simple "+((NodoAsignacion)raiz).getIdentificador()+" como vector.");
+                        }
+                    }
                 }
             }
+            
                           
             numSent++;
             
