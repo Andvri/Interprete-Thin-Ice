@@ -7,10 +7,14 @@ package juego;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import javax.swing.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,7 +40,7 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     private int x = 0;
     private int y = 0;
     private  JPanel [][] mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
-    private final int [][] mapaLogico = {
+    private int [][] mapaLogico = {
         {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
         {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
         {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
@@ -83,6 +87,12 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         add(this.SubContenedor);
         add(this.FooterContenedor);
         
+        JButton reiniciar = new JButton("Reiniciar");
+        
+        this.FooterContenedor.add(reiniciar);
+        
+        
+        
         
         this.outputTextArea = outputTextArea;
         
@@ -118,6 +128,46 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         } catch (IOException ex) {
             Logger.getLogger(ContenedorJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        reiniciar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent arg0) {
+                reiniciar();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent arg0) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent arg0) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent arg0) {
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent arg0) {
+                
+            }
+        });
+    }
+    
+    public void reiniciar () {
+        int[][] copy = Arrays.stream(MAPA_1).map(int[]::clone).toArray(int[][]::new);
+        this.mapaLogico = copy;
+        this.SubContenedor.removeAll();
+        this.SubContenedor.revalidate();
+        this.SubContenedor.repaint();
+        this.mapaGrafico = null;
+        this.mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
+        
+        
+        generarMapa();
     }
     
 
@@ -192,11 +242,18 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     
     public void ejecutarCambios()  {
         String []lineas = this.outputTextArea.getText().split("\n");
-        for (String linea : lineas) 
+        for (int delay = 0; delay < lineas.length ; delay++) 
         { 
-            
-                    ejecutarLinea(linea);  
-            
+                final String  l = lineas[delay];
+                Timer timer = new Timer((1000*delay), new ActionListener(){
+                  @Override
+                  public void actionPerformed( ActionEvent e ){
+                      System.out.println("Delay:" + l);
+                      ejecutarLinea(l);  
+                  }
+                } );
+                timer.setRepeats( false );
+                timer.start();
         }
     }
     
