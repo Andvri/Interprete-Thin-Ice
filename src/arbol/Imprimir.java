@@ -113,6 +113,11 @@ public class Imprimir {
                                             if(raiz instanceof NodoIdentificador ){
                                                 textArea.append(((NodoIdentificador)raiz).getIdentificador());
                                             }
+                                            else{
+                                                if(raiz instanceof NodoBooleano ){
+                                                    textArea.append(((NodoBooleano)raiz).getValor());
+                                                }
+                                            }
                                         }
                                     }
                                 }

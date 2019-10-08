@@ -66,6 +66,7 @@ terminal
     /* Otros */
     Linea,Identificador, Punto_coma,
     Numero,
+    Booleano,
     ERROR;
 
 non terminal 
@@ -155,7 +156,8 @@ FUNCION ::= Identificador:id Parentesis_a OPERACION:parm Parentesis_c {: RESULT 
 
 OPERACION ::= OPERACION_LOGICA:oper {: RESULT=oper; :};
 
-ELEMENTO ::= Numero:num {: RESULT= new NodoNumero(num.toString()); :} 
+ELEMENTO ::= Booleano:boolv {: RESULT= new NodoBooleano(boolv.toString()); :}  
+            | Numero:num {: RESULT= new NodoNumero(num.toString()); :} 
             | Identificador:id {: RESULT= new NodoIdentificador(id.toString()); :}   
             | Resta Numero:num {: RESULT= new NodoNumero("-" + num.toString()); :}   
             | Identificador:id Corchete_a OPERACION_ARITMETICA:op Corchete_c {: RESULT= new NodoIdentificador(id.toString(), (NodoBase) op); :};
