@@ -351,7 +351,6 @@ public class FormSintax extends javax.swing.JFrame {
             txtGenerar.setText("");
             if (txtAnalizarSin != null) {
                 try {
-                   System.out.println(txtAnalizarSin.toString());
                 txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
                     + (sym.right + 1) 
                     + " Columna:" 
@@ -453,7 +452,6 @@ public class FormSintax extends javax.swing.JFrame {
             txtGenerar.setText("");
             if (txtAnalizarSin != null) {
                 try {
-                   System.out.println(txtAnalizarSin.toString());
                 txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
                     + (sym.right + 1) 
                     + " Columna:" 
