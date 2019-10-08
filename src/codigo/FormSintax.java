@@ -365,8 +365,6 @@ public class FormSintax extends javax.swing.JFrame {
             
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
-            System.err.println(ex.getCause() + ex.getClass().getCanonicalName());
-            System.err.println(ex.getStackTrace()[0].getLineNumber());
             if (ex instanceof ClassCastException){
                 //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
                 // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero); 

@@ -53,6 +53,7 @@ public enum Tokens {
     Linea,
     Identificador,
     Numero,
+    Booleano,
     Punto_coma,
     ERROR
 }

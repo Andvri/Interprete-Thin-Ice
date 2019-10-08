@@ -14,16 +14,19 @@ public class NodoFuncion extends NodoBase{
     private NodoBase Parametro;
 
     public NodoFuncion(String Identificador, NodoBase Parametro) {
+        super();
         this.Identificador = Identificador;
         this.Parametro = Parametro;
     }
     
     public NodoFuncion(String Identificador) {
+        super();
         this.Identificador = Identificador;
         this.Parametro = null;
     }
     
     public NodoFuncion() {
+        super();
         this.Identificador = null;
         this.Parametro = null;
     }

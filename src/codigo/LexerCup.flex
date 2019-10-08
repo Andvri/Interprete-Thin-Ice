@@ -71,6 +71,7 @@ que { return new Symbol(sym.Que, yychar, yyline, yytext());}
 {espacio} {/*Ignore*/}
 ";" { return new Symbol(sym.Punto_coma, yychar, yyline, yytext());}
 "//".* {/*Ignore*/}
+"true"|"false" { return new Symbol(sym.Booleano, yychar, yyline, yytext());}
 {L}({L}|{D})* { return new Symbol(sym.Identificador, yychar, yyline, yytext()); }
 {D}+ { return new Symbol(sym.Numero, yychar, yyline, yytext()); }
  . { return new Symbol(sym.ERROR, yychar, yyline, yytext()); }

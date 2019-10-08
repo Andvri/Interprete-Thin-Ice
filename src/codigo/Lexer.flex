@@ -66,6 +66,7 @@ que {lexeme=yytext(); return Que;}
 ";" {  lexeme=yytext(); return Punto_coma;}
 "//".* {/*Ignore*/}
 "\n" {return Linea;}
+"true"|"false" {lexeme=yytext(); return Booleano;}
 {L}({L}|{D})* {lexeme=yytext(); return Identificador;}
 {D}+ {lexeme=yytext(); return Numero;}
  . {return ERROR;}
