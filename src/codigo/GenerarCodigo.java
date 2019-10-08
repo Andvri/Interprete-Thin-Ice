@@ -182,15 +182,25 @@ public class GenerarCodigo {
                                     if (raiz instanceof NodoPara) {
                                         NodoPara nodo = (NodoPara) raiz;        
                                         generarSalida(nodo.getInicializador(), tablaS);
-                                        System.out.println();
+                                        
                                         while (Boolean.parseBoolean(generarSalida(nodo.getVerificacion(), tablaS))) {
                                             generarSalida(nodo.getSegmento(), tablaS);
                                             generarSalida(nodo.getPaso(),tablaS);
-                                            System.out.println("Dentro Para");
                                         }
-                                        
-                                        System.out.println();
                                     }
+                                    else {
+                                        if (raiz instanceof NodoRepita) {
+                                            NodoRepita nodo = (NodoRepita) raiz;
+                                            do {
+                                                generarSalida(nodo.getSegmento(), tablaS);
+                                            } while (Boolean.parseBoolean(generarSalida(nodo.getCondicion(), tablaS)));
+                                        }
+                                        else {
+                                            if (raiz instanceof NodoDefinicion) {
+                                                
+                                            }
+                                        }
+                                    } 
                                 }
                             }
                         }
