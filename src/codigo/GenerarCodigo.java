@@ -159,6 +159,14 @@ public class GenerarCodigo {
                             System.out.println(valorI + " " + nodo.getOperacion()+ " " +  valorD + "= " +value);
                             return value;
                         }
+                        else {
+                            if (raiz instanceof NodoAsignacion) {
+                                String value = generarSalida(((NodoAsignacion)raiz).getAsignacion(), tablaS);
+                                tablaS.editar(((NodoAsignacion)raiz).getIdentificador(), value);
+                                ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
+                                System.out.println(nE.getIdentificador()+ ":=" + nE.getValor());
+                            }
+                        }
                     }
                 }
                
@@ -207,11 +215,11 @@ public class GenerarCodigo {
                                 }
                                 else{ 
                                     if (raiz instanceof  NodoOperacion){
-                                        if(((NodoOperacion)raiz).getOpI() != null){
+                                        /*if(((NodoOperacion)raiz).getOpI() != null){
                                             generarSalida(((NodoOperacion)raiz).getOpI(), tablaS);
                                         }
                                         
-                                        generarSalida(((NodoOperacion)raiz).getOpD(), tablaS);
+                                        generarSalida(((NodoOperacion)raiz).getOpD(), tablaS);*/
                                     }
                                     else{
                                         if (raiz instanceof  NodoIdentificador){
