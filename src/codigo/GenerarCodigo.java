@@ -50,7 +50,7 @@ public class GenerarCodigo {
                             }
                             else {
                                 if (ope == Tokens.Menor_igual) {
-                                    return  (Integer.parseInt(valorI) < Integer.parseInt(valorD))
+                                    return  (Integer.parseInt(valorI) <= Integer.parseInt(valorD))
                                         ? "true" 
                                         : "false";
                                 } 
@@ -131,7 +131,6 @@ public class GenerarCodigo {
     }
     
     public String generarSalida(NodoBase raiz, TablaSimbolos tablaS) {
-        System.out.println("ENTRE GENERAR SALIDA");
         while (raiz != null) {
             if (raiz instanceof  NodoBooleano ){
                 return ((NodoBooleano) raiz).getValor();
@@ -166,6 +165,34 @@ public class GenerarCodigo {
                                 ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
                                 System.out.println(nE.getIdentificador()+ ":=" + nE.getValor());
                             }
+                            else {
+                                if (raiz instanceof NodoSi) {
+                                    
+                                    NodoSi nodo = (NodoSi) raiz;        
+                                    
+                                    if (Boolean.parseBoolean(generarSalida(nodo.getCondicion(),tablaS))) {
+                                        generarSalida(nodo.getSegmento(), tablaS);
+                                    } else {
+                                        if (nodo.getSino() != null){
+                                            generarSalida(nodo.getSino(), tablaS);
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (raiz instanceof NodoPara) {
+                                        NodoPara nodo = (NodoPara) raiz;        
+                                        generarSalida(nodo.getInicializador(), tablaS);
+                                        System.out.println();
+                                        while (Boolean.parseBoolean(generarSalida(nodo.getVerificacion(), tablaS))) {
+                                            generarSalida(nodo.getSegmento(), tablaS);
+                                            generarSalida(nodo.getPaso(),tablaS);
+                                            System.out.println("Dentro Para");
+                                        }
+                                        
+                                        System.out.println();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -180,24 +207,24 @@ public class GenerarCodigo {
             }
             else{
                  if (raiz instanceof  NodoSi){
-                    generarSalida(((NodoSi)raiz).getCondicion(), tablaS);
+                    /*generarSalida(((NodoSi)raiz).getCondicion(), tablaS);
                     generarSalida(((NodoSi)raiz).getSegmento(), tablaS);
 
                     if(((NodoSi)raiz).getSino() != null){
                             generarSalida(((NodoSi)raiz).getSino(), tablaS);
-                    }
+                    }*/
                   }
                  else{ 
                       if (raiz instanceof  NodoPara){
-                          generarSalida(((NodoPara)raiz).getInicializador(), tablaS);
+                          /*generarSalida(((NodoPara)raiz).getInicializador(), tablaS);
                           generarSalida(((NodoPara)raiz).getPaso(), tablaS);
                           generarSalida(((NodoPara)raiz).getVerificacion(), tablaS);
-                          generarSalida(((NodoPara)raiz).getSegmento(), tablaS);
+                          generarSalida(((NodoPara)raiz).getSegmento(), tablaS);*/
                       }
                       else{ 
                           if (raiz instanceof  NodoRepita){
-                              generarSalida(((NodoRepita)raiz).getSegmento(), tablaS);
-                              generarSalida(((NodoRepita)raiz).getCondicion(), tablaS);
+                              /*generarSalida(((NodoRepita)raiz).getSegmento(), tablaS);
+                              generarSalida(((NodoRepita)raiz).getCondicion(), tablaS);*/
                           }
                           else{ 
                               if (raiz instanceof  NodoDefinicion){
@@ -207,11 +234,11 @@ public class GenerarCodigo {
                               }
                               else{
                                 if (raiz instanceof  NodoAsignacion){
-                                  generarSalida(((NodoAsignacion)raiz).getAsignacion(), tablaS);
+                            /*      generarSalida(((NodoAsignacion)raiz).getAsignacion(), tablaS);
                                   
                                   if(((NodoAsignacion)raiz).getIndiceVector() != null){
                                    generarSalida(((NodoAsignacion)raiz).getIndiceVector(), tablaS);
-                                  } 
+                                  } */
                                 }
                                 else{ 
                                     if (raiz instanceof  NodoOperacion){
