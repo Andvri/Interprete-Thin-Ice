@@ -309,6 +309,7 @@ public class FormSintax extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarSalidaActionPerformed
+        System.out.println("Entre");
         String ST = inputText.getText();
         StringReader str = new StringReader(ST);
         LexerCup lc = new codigo.LexerCup(str);
