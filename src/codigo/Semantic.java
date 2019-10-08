@@ -19,14 +19,26 @@ public class Semantic {
     static Vector<String> errores;
     static int numSent;
     HashSet<String> tiposFunc;
+    HashSet<String> operadoresArit;
+    HashSet<String> operadoresLogi;
     
     public Semantic() {
         errores = new Vector<String>();
         numSent = 0;
         tiposFunc = new HashSet<String>();
+        operadoresArit = new HashSet<String>();
+        operadoresLogi = new HashSet<String>();
         
         for (TiposFunc t : TiposFunc.values()) {
             tiposFunc.add(t.name());
+        }
+        
+        for (OperadoresLogicos t : OperadoresLogicos.values()) {
+            operadoresLogi.add(t.name());
+        }
+        
+        for (OperadoresAritmeticos t : OperadoresAritmeticos.values()) {
+            operadoresArit.add(t.name());
         }
     }
     
@@ -107,6 +119,47 @@ public class Semantic {
                                     }
                                 }
                             //Falta la verificacion de la condicion cuando es un elemento simple
+                            } else {
+                                if (raiz instanceof NodoOperacion) {
+                                    NodoOperacion nodo = (NodoOperacion)raiz;
+                                    
+                                    String tipoD =  nodo.getOpD() != null && nodo.getOpD() instanceof NodoOperacion 
+                                                    ? ((NodoOperacion) nodo.getOpD()).getTipo().toString()
+                                                    : nodo.getTipo().toString();
+                                    
+                                    String tipoI =  nodo.getOpI() != null && nodo.getOpI() instanceof NodoOperacion 
+                                                    ? ((NodoOperacion) nodo.getOpI()).getTipo().toString()
+                                                    : nodo.getTipo().toString();
+                                    
+                                    String tipoP = nodo.getTipo().toString();
+                                    
+                                    
+                                    if ((tipoI != tipoP || tipoD != tipoP) && nodo.getOperacion().toString() != "Diferencia")
+                                    {
+                                        errores.add(
+                                            "El tipo de operacion: "
+                                            + nodo.getTipo().toString().toUpperCase()
+                                            + " "
+                                            + nodo.getOperacion().toString() 
+                                            +" Recibio una operación "
+                                            + tipoD.toUpperCase() 
+                                            + " y una operación "
+                                            + tipoI.toUpperCase() +
+                                            ".\n"
+                                        );
+                                    }
+                                    
+                                    if (nodo.getOperacion().toString() == "Diferencia" && tipoI != tipoD) {
+                                       errores.add(
+                                            "La diferencia solo admite ambas operaciones"
+                                            + " Enteras o Logicas. recibio:"
+                                            + tipoI.toUpperCase() 
+                                            + " y "
+                                            + tipoD.toUpperCase() 
+                                            +".\n"
+                                        );
+                                    }
+                                } 
                             }
                         }
                     }

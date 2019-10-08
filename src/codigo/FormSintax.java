@@ -36,7 +36,7 @@ public class FormSintax extends javax.swing.JFrame {
                 + "    logico b\n"
                 + "    entero d := 5\n"
                 + "    entero c := -4\n"
-                + "    logico b := 4 > 3 Y ! 2 < 4\n"
+                + "    logico b := 4 + 3 Y ! 2 < 4\n"
                 + "\n"
                 + "    si (4 > 3 Y ! 2 < 4) {\n"
                 + "        entero d := 5\n"
@@ -353,8 +353,7 @@ public class FormSintax extends javax.swing.JFrame {
             
             NodoBase raiz= s.getNodoBase();
             Imprimir.imprimir(raiz, txtAnalizarSin);
-            
-            
+
             txtTablaS.setText("");
             TablaSimbolos ts = new TablaSimbolos();
             ts.cargar(raiz);
@@ -366,11 +365,31 @@ public class FormSintax extends javax.swing.JFrame {
             
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
+            System.err.println(ex.getCause() + ex.getClass().getCanonicalName());
+            System.err.println(ex.getStackTrace()[0].getLineNumber());
+            if (ex instanceof ClassCastException){
+                //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
+                // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero); 
+                throw ex;
+            }
             Symbol sym = s.getS();
             txtTablaS.setText("");
             txtAnalizarSem.setText("");
-            txtAnalizarSin.setText("Error de Sintaxis. Linea: " + (sym.right + 1) + " Columna:" + (sym.left + 1) + " Error:\"" + sym.value + "\"");
-            txtAnalizarSin.setForeground(Color.red);
+            if (txtAnalizarSin != null) {
+                try {
+                   System.out.println(txtAnalizarSin.toString());
+                txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
+                    + (sym.right + 1) 
+                    + " Columna:" 
+                    + (sym.left + 1) 
+                    + " Error:\"" 
+                    + sym.value + "\"");
+                txtAnalizarSin.setForeground(Color.red);
+                } catch (NullPointerException npe) {
+                    System.err.println(npe.getCause() + npe.getClass().getCanonicalName());
+                }
+                
+            }
         }
     }
 
