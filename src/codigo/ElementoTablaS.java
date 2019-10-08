@@ -13,7 +13,7 @@ public class ElementoTablaS {
     String identificador;
     TiposIds tipo;
     boolean isVector;
-    int valor;
+    String valor;
     int tamVector;
     int numSent;
     
@@ -29,6 +29,7 @@ public class ElementoTablaS {
         this.tipo = tipo;
         this.isVector = false;
         this.numSent = numSent;
+        this.valor = (TiposIds.entero == tipo) ? "0" : "false";
     }
 
     public ElementoTablaS(String identificador, TiposIds tipo, int numSent, boolean isVector){
@@ -36,6 +37,7 @@ public class ElementoTablaS {
         this.tipo = tipo;
         this.isVector = isVector;
         this.numSent = numSent;
+        this.valor = (TiposIds.entero == tipo) ? "0" : "false";
     }
     
     public String getIdentificador(){
@@ -46,11 +48,11 @@ public class ElementoTablaS {
         this.identificador = identificador;
     }
 
-    public int getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

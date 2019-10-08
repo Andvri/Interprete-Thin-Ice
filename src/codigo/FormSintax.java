@@ -93,7 +93,7 @@ public class FormSintax extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jDialog5 = new javax.swing.JDialog();
         jDialog6 = new javax.swing.JDialog();
-        analizar = new javax.swing.JButton();
+        generarSalida = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         inputText = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -190,10 +190,10 @@ public class FormSintax extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        analizar.setText("Generar");
-        analizar.addActionListener(new java.awt.event.ActionListener() {
+        generarSalida.setText("Generar");
+        generarSalida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                analizarActionPerformed(evt);
+                generarSalidaActionPerformed(evt);
             }
         });
 
@@ -242,7 +242,7 @@ public class FormSintax extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(analizar)
+                .addComponent(generarSalida)
                 .addGap(204, 204, 204)
                 .addComponent(jLabel1)
                 .addGap(200, 200, 200)
@@ -277,7 +277,7 @@ public class FormSintax extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addComponent(analizar))
+                        .addComponent(generarSalida))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -308,9 +308,64 @@ public class FormSintax extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
-        analizar();
-    }//GEN-LAST:event_analizarActionPerformed
+    private void generarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarSalidaActionPerformed
+        String ST = inputText.getText();
+        StringReader str = new StringReader(ST);
+        LexerCup lc = new codigo.LexerCup(str);
+        Sintax s = new Sintax(lc);
+
+        try {
+            s.parse();
+            txtAnalizarSin.append("Analisis Realizado con Exito");
+            txtAnalizarSin.append("\n \n AST \n");
+            
+            NodoBase raiz= s.getNodoBase();
+            Imprimir.imprimir(raiz, txtAnalizarSin);
+
+            txtTablaS.setText("");
+            TablaSimbolos ts = new TablaSimbolos();
+            ts.cargar(raiz);
+            ts.imprimir(txtTablaS);
+            
+            Semantic semantic = new Semantic();
+            semantic.analizar(raiz, ts);
+            semantic.imprimir(txtGenerar);
+            
+            GenerarCodigo gc = new GenerarCodigo();
+            gc.generarSalida(raiz, ts);
+            
+            
+            txtAnalizarSin.setForeground(new Color(25, 111, 61));
+        } catch (Exception ex) {
+            if (ex instanceof ClassCastException){
+                try {
+                    //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
+                    // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero);
+                    throw ex;
+                } catch (Exception ex1) {
+                    Logger.getLogger(FormSintax.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            Symbol sym = s.getS();
+            txtTablaS.setText("");
+            txtGenerar.setText("");
+            if (txtAnalizarSin != null) {
+                try {
+                   System.out.println(txtAnalizarSin.toString());
+                txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
+                    + (sym.right + 1) 
+                    + " Columna:" 
+                    + (sym.left + 1) 
+                    + " Error:\"" 
+                    + sym.value + "\"");
+                txtAnalizarSin.setForeground(Color.red);
+                } catch (NullPointerException npe) {
+                    System.err.println(npe.getCause() + npe.getClass().getCanonicalName());
+                }
+                
+            }
+        }
+    }//GEN-LAST:event_generarSalidaActionPerformed
 
     public void analizar() {
         try {
@@ -488,7 +543,7 @@ public class FormSintax extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton analizar;
+    private javax.swing.JButton generarSalida;
     private javax.swing.JTextArea inputText;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
