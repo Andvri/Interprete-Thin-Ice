@@ -11,6 +11,7 @@ package codigo;
  */
 public enum OperadoresLogicos {
     Diferencia,
+    Igual,
     /* Operaciónes Logicas */
     Y_logico,
     O_logico,

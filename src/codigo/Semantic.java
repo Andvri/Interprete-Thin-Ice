@@ -194,86 +194,137 @@ public class Semantic {
                                 if (raiz instanceof NodoOperacion) {
                                     NodoOperacion nodo = (NodoOperacion)raiz;
                                     
-                                    if(operadoresArit.contains(nodo.getOperacion().toString())){
+                                    if(operadoresArit.contains(nodo.getOperacion().toString()) &&  operadoresLogi.contains(nodo.getOperacion().toString())){
+                                        TiposIds tipoI = null;
+                                        TiposIds tipoD = null;
+                                        
                                         if(nodo.getOpD() instanceof NodoOperacion){
-                                            if(((NodoOperacion)nodo.getOpD()).getTipo() != TiposIds.entero){
-                                                errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
-                                            }
+                                            tipoD = ((NodoOperacion)nodo.getOpD()).getTipo();
                                         }
                                         else{
                                             if(nodo.getOpD() instanceof NodoIdentificador){
                                                 ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpD()).getIdentificador());
-                                                if(elemId.getTipo() != TiposIds.entero){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
-                                                }
+                                                tipoD = elemId.getTipo();
                                             }
                                             else{
                                                 if(nodo.getOpD() instanceof NodoBooleano){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                    tipoD = TiposIds.logico;
+                                                }
+                                                else{
+                                                    if(nodo.getOpD() instanceof NodoNumero){
+                                                        tipoD = TiposIds.entero;
+                                                    }
                                                 }
                                             }
                                         }
                                         
                                         if(nodo.getOpI() instanceof NodoOperacion){
-                                            if(((NodoOperacion)nodo.getOpI()).getTipo() != TiposIds.entero){
-                                                errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
-                                            }
+                                            tipoI = ((NodoOperacion)nodo.getOpI()).getTipo();
                                         }
                                         else{
                                             if(nodo.getOpI() instanceof NodoIdentificador){
                                                 ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpI()).getIdentificador());
-                                                if(elemId.getTipo() != TiposIds.entero){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
-                                                }
+                                                tipoI = elemId.getTipo();
                                             }
                                             else{
                                                 if(nodo.getOpI() instanceof NodoBooleano){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                    tipoI = TiposIds.logico;
+                                                }
+                                                else{
+                                                    if(nodo.getOpI() instanceof NodoNumero){
+                                                        tipoI = TiposIds.entero;
+                                                    }
                                                 }
                                             }
                                         }
                                         
+                                        if(tipoI != tipoD){
+                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser del mismo tipo.\n");
+                                        }
                                     }
                                     else{
-                                        if(operadoresLogi.contains(nodo.getOperacion().toString())){
+                                        if(operadoresArit.contains(nodo.getOperacion().toString())){
                                             if(nodo.getOpD() instanceof NodoOperacion){
-                                                if(((NodoOperacion)nodo.getOpD()).getTipo() != TiposIds.logico){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                if(((NodoOperacion)nodo.getOpD()).getTipo() != TiposIds.entero){
+                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
                                                 }
                                             }
                                             else{
                                                 if(nodo.getOpD() instanceof NodoIdentificador){
                                                     ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpD()).getIdentificador());
-                                                    if(elemId.getTipo() != TiposIds.logico){
-                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                    if(elemId.getTipo() != TiposIds.entero){
+                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
                                                     }
                                                 }
                                                 else{
-                                                    if(nodo.getOpD() instanceof NodoNumero){
-                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                    if(nodo.getOpD() instanceof NodoBooleano){
+                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
                                                     }
                                                 }
                                             }
-                                            
+
                                             if(nodo.getOpI() instanceof NodoOperacion){
-                                                if(((NodoOperacion)nodo.getOpI()).getTipo() != TiposIds.logico){
-                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                if(((NodoOperacion)nodo.getOpI()).getTipo() != TiposIds.entero){
+                                                    errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
                                                 }
                                             }
                                             else{
                                                 if(nodo.getOpI() instanceof NodoIdentificador){
                                                     ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpI()).getIdentificador());
-                                                    if(elemId.getTipo() != TiposIds.logico){
+                                                    if(elemId.getTipo() != TiposIds.entero){
+                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                    }
+                                                }
+                                                else{
+                                                    if(nodo.getOpI() instanceof NodoBooleano){
+                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                        else{
+                                            if(operadoresLogi.contains(nodo.getOperacion().toString())){
+                                                if(nodo.getOpD() instanceof NodoOperacion){
+                                                    if(((NodoOperacion)nodo.getOpD()).getTipo() != TiposIds.logico){
                                                         errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
                                                     }
                                                 }
                                                 else{
-                                                    if(nodo.getOpI() instanceof NodoNumero){
+                                                    if(nodo.getOpD() instanceof NodoIdentificador){
+                                                        ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpD()).getIdentificador());
+                                                        if(elemId.getTipo() != TiposIds.logico){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        }
+                                                    }
+                                                    else{
+                                                        if(nodo.getOpD() instanceof NodoNumero){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        }
+                                                    }
+                                                }
+
+                                                if(nodo.getOpI() instanceof NodoOperacion){
+                                                    if(((NodoOperacion)nodo.getOpI()).getTipo() != TiposIds.logico){
                                                         errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                    }
+                                                }
+                                                else{
+                                                    if(nodo.getOpI() instanceof NodoIdentificador){
+                                                        ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpI()).getIdentificador());
+                                                        if(elemId.getTipo() != TiposIds.logico){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        }
+                                                    }
+                                                    else{
+                                                        if(nodo.getOpI() instanceof NodoNumero){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
+                                    
                                     }
                                 }
                                 else{
