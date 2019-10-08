@@ -21,6 +21,7 @@ public class GenerarCodigo {
     }
     
     public String generarSalida(NodoBase raiz, TablaSimbolos ts) {
+        
         return null;
     }
     
