@@ -1,18 +1,28 @@
 package codigo;
 
 import java_cup.runtime.Symbol;
+import arbol.*;
 
 parser code
 {:
     private Symbol s;
-    
+    private NodoBase nodoBase=null;
+
     public void syntax_error(Symbol s){
         this.s = s;
     }
 
     public Symbol getS(){
         return this.s;
-}
+    }
+    
+    public NodoBase getNodoBase(){
+        return nodoBase;
+    }
+
+    public void setNodoBase(NodoBase nodoBase){
+        this.nodoBase = nodoBase;
+    }
 :};
 
 
@@ -61,6 +71,7 @@ terminal
 non terminal 
         INICIO,
         SEGMENTO,
+        SENTENCIA,
         OPERACION_ARITMETICA,
         TIPO_VARIABLE,
         DEFINICION_VARIABLE,
@@ -83,58 +94,96 @@ non terminal
 
 start with INICIO;
 
-INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO Llave_c;
-SEGMENTO ::= 
-        | DEFINICION_VARIABLE SEGMENTO
-        | AS_VARIABLE SEGMENTO
-        | FUNCION SEGMENTO
-        | CONDICIONAL_SI SEGMENTO
-        | CICLO_PARA SEGMENTO
-        | CICLO_REPITA_HASTA_QUE SEGMENTO;
+INICIO ::= Programa Parentesis_a Parentesis_c Llave_a SEGMENTO:seg Llave_c {:
+    NodoPrograma nodo = new NodoPrograma((NodoBase) seg);
+    this.parser.setNodoBase(nodo); 
+:};
 
-OPERADOR_RELACIONAL ::= Mayor |
-                        Mayor_igual |
-                        Menor |
-                        Menor_igual |
-                        Igual |
-                        Diferencia;
+SEGMENTO ::= | SEGMENTO:seg SENTENCIA:sent {:
+    NodoBase hijo = (NodoBase) seg;
+    if(hijo !=null){
+        while(!hijo.withoutHermanoD()){
+            hijo = hijo.getHermanoD();
+        }
+        hijo.setHermanoD((NodoBase) sent);
+        RESULT=seg;
+    }else{
+        RESULT=sent;
+    }
+:};
 
-OPERADOR_LOGICO ::= Y_logico |
-                    O_logico;
+SENTENCIA ::= 
+        DEFINICION_VARIABLE:def {: RESULT=def; :}
+        | AS_VARIABLE:asig {: RESULT=asig; :}
+        | FUNCION:func {: RESULT=func; :}  
+        | CONDICIONAL_SI:si {: RESULT=si; :}
+        | CICLO_PARA:para {: RESULT=para; :}
+        | CICLO_REPITA_HASTA_QUE:rep {: RESULT=rep; :};
 
-OPERADOR_SUMA ::= Suma | Resta;
-OPERADOR_MULT ::= Multiplicacion | Division;
+OPERADOR_RELACIONAL ::= Mayor:mayor {: RESULT=Tokens.Mayor; :} 
+                        | Mayor_igual:mayor_i {: RESULT=Tokens.Mayor_igual; :} 
+                        | Menor:menor {: RESULT=Tokens.Menor; :} 
+                        | Menor_igual:menor_i {: RESULT=Tokens.Menor_igual; :} 
+                        | Igual:igual {: RESULT=Tokens.Igual; :} 
+                        | Diferencia:dif {: RESULT=Tokens.Diferencia; :};
 
-TIPO_VARIABLE ::= Entero | Logico;
-DEFINICION_VARIABLE ::= TIPO_VARIABLE Identificador 
-              | TIPO_VARIABLE Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
-AS_VARIABLE ::= DEFINICION_VARIABLE Asignacion OPERACION |
-                Identificador Asignacion OPERACION |
-                Identificador Corchete_a OPERACION_ARITMETICA Corchete_c Asignacion OPERACION;
+OPERADOR_LOGICO ::= Y_logico:y_log {: RESULT=Tokens.Y_logico; :}
+                    | O_logico:o_log {: RESULT=Tokens.O_logico; :};
 
+OPERADOR_SUMA ::= Suma:sum {: RESULT=Tokens.Suma; :} 
+                | Resta:rest {: RESULT=Tokens.Resta; :};
 
+OPERADOR_MULT ::= Multiplicacion:mult {: RESULT=Tokens.Multiplicacion; :} 
+                | Division:div {: RESULT=Tokens.Division; :};
 
-OPERACION ::= OPERACION_LOGICA;
-ELEMENTO ::= Numero | 
-            Identificador | 
-            Resta Numero | 
-            Identificador Corchete_a OPERACION_ARITMETICA Corchete_c;
+TIPO_VARIABLE ::= Entero:entero {: RESULT=TiposIds.entero; :}
+            | Logico:logico {: RESULT=TiposIds.logico; :};
 
-FACTOR ::= Parentesis_a OPERACION_LOGICA Parentesis_c | 
-        Negacion_logica Parentesis_a OPERACION_LOGICA Parentesis_c | 
-        ELEMENTO | 
-        Negacion_logica ELEMENTO ;
+DEFINICION_VARIABLE ::= TIPO_VARIABLE:tipo Identificador:id {: RESULT= new NodoDefinicion(id.toString(), (TiposIds) tipo); :}
+              | TIPO_VARIABLE:tipo Identificador:id Corchete_a OPERACION_ARITMETICA:oper Corchete_c {: RESULT= new NodoDefinicion(id.toString(), (TiposIds) tipo, (NodoBase) oper); :};
+
+AS_VARIABLE ::= DEFINICION_VARIABLE:def Asignacion OPERACION:asig {:
+                    NodoAsignacion nodo = new NodoAsignacion(((NodoDefinicion)def).getIdentificador(), (NodoBase) asig);
+                    ((NodoDefinicion)def).setHermanoD(nodo);
+                    RESULT= (NodoDefinicion)def;
+                :}
+                | Identificador:id Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig); :}
+                | Identificador:id Corchete_a OPERACION_ARITMETICA:indice Corchete_c Asignacion OPERACION:asig {: RESULT= new NodoAsignacion(id.toString(), (NodoBase) asig, (NodoBase) indice); :};
+
+FUNCION ::= Identificador:id Parentesis_a OPERACION:parm Parentesis_c {: RESULT = new NodoFuncion(id.toString(), (NodoBase) parm); :}
+        | Identificador:id Parentesis_a Parentesis_c {: RESULT = new NodoFuncion(id.toString()); :};
+
+OPERACION ::= OPERACION_LOGICA:oper {: RESULT=oper; :};
+
+ELEMENTO ::= Numero:num {: RESULT= new NodoNumero(num.toString()); :} 
+            | Identificador:id {: RESULT= new NodoIdentificador(id.toString()); :}   
+            | Resta Numero:num {: RESULT= new NodoNumero("-" + num.toString()); :}   
+            | Identificador:id Corchete_a OPERACION_ARITMETICA:op Corchete_c {: RESULT= new NodoIdentificador(id.toString(), (NodoBase) op); :};
+
+FACTOR ::= Parentesis_a OPERACION_LOGICA:oper Parentesis_c {: RESULT= oper; :}  
+        | Negacion_logica Parentesis_a OPERACION_LOGICA:operD Parentesis_c  {: RESULT= new NodoOperacion(Tokens.Negacion_logica, (NodoBase) operD, TiposIds.logico); :} 
+        | ELEMENTO:elem {: RESULT= elem; :}  
+        | Negacion_logica ELEMENTO:operD {: RESULT= new NodoOperacion(Tokens.Negacion_logica, (NodoBase) operD, TiposIds.logico); :};
         
-OPERACION_ARITMETICA ::= OPERACION_ARITMETICA OPERADOR_SUMA TERM | TERM;
-TERM ::= TERM OPERADOR_MULT OPERACION_MOD | OPERACION_MOD;
-OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR | FACTOR;
+OPERACION_ARITMETICA ::= OPERACION_ARITMETICA:operI OPERADOR_SUMA:op TERM:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.entero); :}
+                    | TERM:term {: RESULT= term; :};
 
-OPERACION_RELACIONAL ::= OPERACION_ARITMETICA  OPERADOR_RELACIONAL OPERACION_ARITMETICA | OPERACION_ARITMETICA;
-OPERACION_LOGICA ::= OPERACION_LOGICA OPERADOR_LOGICO OPERACION_RELACIONAL | OPERACION_RELACIONAL;
+TERM ::= TERM:operI OPERADOR_MULT:op OPERACION_MOD:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.entero); :}
+        | OPERACION_MOD:mod {: RESULT= mod; :};
+
+OPERACION_MOD ::= OPERACION_MOD:operI Modulo:op FACTOR:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.entero); :}
+                | FACTOR:fact {: RESULT= fact; :} ;
+
+OPERACION_RELACIONAL ::= OPERACION_ARITMETICA:operI  OPERADOR_RELACIONAL:op OPERACION_ARITMETICA:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.logico); :}
+                | OPERACION_ARITMETICA:oper {: RESULT= oper; :};
+
+OPERACION_LOGICA ::= OPERACION_LOGICA:operI OPERADOR_LOGICO:op OPERACION_RELACIONAL:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.logico); :}  
+                | OPERACION_RELACIONAL:oper {: RESULT= oper; :};
 
 
-CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c 
-                   | Si Parentesis_a OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c Sino Llave_a SEGMENTO Llave_c;
+CONDICIONAL_SI ::= Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg);:}
+                   | Si Parentesis_a OPERACION_LOGICA:cond Parentesis_c Llave_a SEGMENTO:seg Llave_c Sino Llave_a SEGMENTO:segSiNo Llave_c {:RESULT = new NodoSi((NodoBase) cond,(NodoBase) seg,(NodoBase) segSiNo);:};
 
-CICLO_PARA ::= Para Parentesis_a OPERACION_LOGICA Punto_coma OPERACION_LOGICA Punto_coma OPERACION_LOGICA Parentesis_c Llave_a SEGMENTO Llave_c;
-CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO Hasta Que OPERACION_LOGICA Punto_coma;
+CICLO_PARA ::= Para Parentesis_a SEGMENTO:inic Punto_coma SEGMENTO:paso Punto_coma OPERACION_LOGICA:verif Parentesis_c Llave_a SEGMENTO:seg Llave_c {: RESULT= new NodoPara((NodoBase) inic, (NodoBase) paso, (NodoBase) verif, (NodoBase) seg); :};
+
+CICLO_REPITA_HASTA_QUE ::= Repita SEGMENTO:seg Hasta Que OPERACION_LOGICA:cond Punto_coma {:RESULT = new NodoRepita((NodoBase) cond, (NodoBase) seg);:};
