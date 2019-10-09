@@ -130,7 +130,7 @@ public class TablaSimbolos {
         tabla.replace(identificador, e);
     }
     
-    public void editar(String identificador, String valor, String posicion) {
+    public void editarVector(String identificador, String valor, String posicion) {
         ElementoTablaS e = this.buscar(identificador);
         e.setValor(valor, posicion);
         tabla.replace(identificador, e);

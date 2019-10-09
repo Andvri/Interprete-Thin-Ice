@@ -147,7 +147,7 @@ public class GenerarCodigo {
                         NodoIdentificador nodo = ((NodoIdentificador)raiz);
                         ElementoTablaS elemId = tablaS.buscar(nodo.getIdentificador());
                         if (elemId.getIsVector()) {
-                           return elemId.getValor(generarSalida(nodo.getIndiceVector(), tablaS));
+                           return elemId.getValorVector( generarSalida(nodo.getIndiceVector(), tablaS) );
                         } else {
                             return elemId.getValor();
                         }
@@ -174,7 +174,7 @@ public class GenerarCodigo {
                                 String value = generarSalida(nodo.getAsignacion(), tablaS);
                                 if (elemId.getIsVector()) {
                                     String posicion = generarSalida(nodo.getIndiceVector(), tablaS);
-                                    tablaS.editar(((NodoAsignacion)raiz).getIdentificador(), value, posicion);
+                                    tablaS.editarVector(((NodoAsignacion)raiz).getIdentificador(), value, posicion);
                                     ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
                                     System.out.println(nE.getIdentificador()+ "["+posicion+"]:=" + nE.getValor());
                                 } else {
@@ -224,8 +224,12 @@ public class GenerarCodigo {
                                                     NodoDefinicion nodo = ((NodoDefinicion)raiz);
                                                     if(nodo.getIndiceVector() != null){
                                                         ElementoTablaS elemId = tablaS.buscar(nodo.getIdentificador());
-                                                        elemId.inicializarValorVector(generarSalida(nodo.getIndiceVector(), tablaS));
-                                                        System.out.println(elemId.getIdentificador() + "[]:=" + elemId.getValor()  );
+                                                        if (elemId != null) {
+                                                            elemId.inicializarValorVector(generarSalida(nodo.getIndiceVector(), tablaS));
+                                                            System.out.println(elemId.getIdentificador() + "[]:=" + elemId.getValor()  );
+                                                        }
+                                                        
+                                                        
                                                     }  
                                                  }
                                             }

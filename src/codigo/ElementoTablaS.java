@@ -51,7 +51,7 @@ public class ElementoTablaS {
         return valor;
     }
     
-    public String getValor( String posicion) {
+    public String getValorVector( String posicion) {
         String[] valueTmp = this.valor.split(",");
         return valueTmp[Integer.parseInt(posicion)];
     }
