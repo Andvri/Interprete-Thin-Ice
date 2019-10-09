@@ -16,7 +16,6 @@ public class ElementoTablaS {
     String valor;
     int tamVector;
     int numSent;
-    
 
     public ElementoTablaS(String identificador){
         this.identificador = identificador;
@@ -51,11 +50,32 @@ public class ElementoTablaS {
     public String getValor() {
         return valor;
     }
+    
+    public String getValor( String posicion) {
+        String[] valueTmp = this.valor.split(",");
+        return valueTmp[Integer.parseInt(posicion)];
+    }
 
     public void setValor(String valor) {
         this.valor = valor;
     }
-
+    
+    public void setValor(String valor, String posicion) {
+        String[] valueTmp = this.valor.split(",");
+        valueTmp[Integer.parseInt(posicion)] = valor;
+        this.valor = String.join(",", valueTmp);
+    }
+    
+    public void inicializarValorVector(String cantidad) {
+       String[] valores = new String[Integer.parseInt(cantidad)];
+       for (int i = 0; i < valores.length; i ++) {
+           valores[i] = (TiposIds.entero == tipo) ? "0" : "false";
+       }
+       
+       this.valor = String.join(",", valores);
+       
+    }
+    
     public TiposIds getTipo() {
         return tipo;
     }

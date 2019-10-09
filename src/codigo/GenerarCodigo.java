@@ -144,8 +144,13 @@ public class GenerarCodigo {
                 }
                 else {
                     if (raiz instanceof NodoIdentificador) {
-                        ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)raiz).getIdentificador());
-                        return elemId.valor;
+                        NodoIdentificador nodo = ((NodoIdentificador)raiz);
+                        ElementoTablaS elemId = tablaS.buscar(nodo.getIdentificador());
+                        if (elemId.getIsVector()) {
+                           return elemId.getValor(generarSalida(nodo.getIndiceVector(), tablaS));
+                        } else {
+                            return elemId.getValor();
+                        }
                     }
                     else {
                         if (raiz instanceof NodoOperacion) {
@@ -164,10 +169,20 @@ public class GenerarCodigo {
                         }
                         else {
                             if (raiz instanceof NodoAsignacion) {
-                                String value = generarSalida(((NodoAsignacion)raiz).getAsignacion(), tablaS);
-                                tablaS.editar(((NodoAsignacion)raiz).getIdentificador(), value);
-                                ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
-                                System.out.println(nE.getIdentificador()+ ":=" + nE.getValor());
+                                NodoAsignacion nodo = ((NodoAsignacion)raiz);
+                                ElementoTablaS elemId = tablaS.buscar(nodo.getIdentificador());
+                                String value = generarSalida(nodo.getAsignacion(), tablaS);
+                                if (elemId.getIsVector()) {
+                                    String posicion = generarSalida(nodo.getIndiceVector(), tablaS);
+                                    tablaS.editar(((NodoAsignacion)raiz).getIdentificador(), value, posicion);
+                                    ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
+                                    System.out.println(nE.getIdentificador()+ "["+posicion+"]:=" + nE.getValor());
+                                } else {
+                                    
+                                    tablaS.editar(((NodoAsignacion)raiz).getIdentificador(), value);
+                                    ElementoTablaS nE =  tablaS.buscar(((NodoAsignacion)raiz).getIdentificador());
+                                    System.out.println(nE.getIdentificador()+ ":=" + nE.getValor());
+                                }
                             }
                             else {
                                 if (raiz instanceof NodoSi) {
@@ -204,6 +219,16 @@ public class GenerarCodigo {
                                                 NodoFuncion nodo = (NodoFuncion) raiz;
                                                 llamarFuncion(nodo.getIdentificador(),generarSalida(nodo.getParametro(), tablaS));
                                             }
+                                            else {
+                                                if (raiz instanceof  NodoDefinicion){
+                                                    NodoDefinicion nodo = ((NodoDefinicion)raiz);
+                                                    if(nodo.getIndiceVector() != null){
+                                                        ElementoTablaS elemId = tablaS.buscar(nodo.getIdentificador());
+                                                        elemId.inicializarValorVector(generarSalida(nodo.getIndiceVector(), tablaS));
+                                                        System.out.println(elemId.getIdentificador() + "[]:=" + elemId.getValor()  );
+                                                    }  
+                                                 }
+                                            }
                                         }
                                     } 
                                 }
@@ -219,20 +244,6 @@ public class GenerarCodigo {
             
             if (raiz instanceof  NodoPrograma){
               generarSalida(((NodoPrograma)raiz).getSegmento(), tablaS);
-            }
-            else{
-                if (raiz instanceof  NodoDefinicion){
-                   if(((NodoDefinicion)raiz).getIndiceVector() != null){
-                      generarSalida(((NodoDefinicion)raiz).getIndiceVector(), tablaS);
-                   }  
-                }
-                else{
-                    if (raiz instanceof  NodoIdentificador){
-                        if(((NodoIdentificador)raiz).getIndiceVector() != null){
-                            generarSalida(((NodoIdentificador)raiz).getIndiceVector(), tablaS);
-                        } 
-                    }
-                }
             }
             
             raiz = raiz.getHermanoD();

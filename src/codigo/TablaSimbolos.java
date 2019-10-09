@@ -126,7 +126,13 @@ public class TablaSimbolos {
 
     public void editar(String identificador, String valor) {
         ElementoTablaS e = this.buscar(identificador);
-        e.setValor(valor);
+        e.setValor(valor);    
+        tabla.replace(identificador, e);
+    }
+    
+    public void editar(String identificador, String valor, String posicion) {
+        ElementoTablaS e = this.buscar(identificador);
+        e.setValor(valor, posicion);
         tabla.replace(identificador, e);
     }
 }
