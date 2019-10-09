@@ -117,13 +117,13 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         
         
         try {
-            this.imageJugador = ImageIO.read(new File(IMAGENESPATH + "bloque-player.png"));
-            this.imageAgua = ImageIO.read(new File(IMAGENESPATH + "bloque-agua.png"));
-            this.imageHielo = ImageIO.read(new File(IMAGENESPATH + "bloque-hielo.png"));
-            this.imageLlegada = ImageIO.read(new File(IMAGENESPATH + "bloque-llegada.png"));
-            this.imageMuro = ImageIO.read(new File(IMAGENESPATH + "bloque-muro.png"));
-            this.imageInactivo = ImageIO.read(new File(IMAGENESPATH + "bloque-inactivo.png"));
-            
+            this.imageJugador = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-player.png"));
+            this.imageAgua = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-agua.png"));
+            this.imageHielo = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-hielo.png"));
+            this.imageLlegada = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-llegada.png"));
+            this.imageMuro = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-muro.png"));
+            this.imageInactivo = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-inactivo.png"));
+
             generarMapa();
         } catch (IOException ex) {
             Logger.getLogger(ContenedorJuego.class.getName()).log(Level.SEVERE, null, ex);
@@ -238,7 +238,7 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     }
     
     public boolean verificarTrayectoria(int [] p) {
-        return mapaLogico[p[0]+this.y][p[1]+this.x] == 1;
+        return mapaLogico[p[0]+this.y][p[1]+this.x] >= 1;
     }
     
     public void ejecutarCambios()  {
