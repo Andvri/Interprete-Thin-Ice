@@ -149,8 +149,6 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
                 try {
                 this.displayOutput.setText("Error de Sintaxis. Linea: " 
                     + (sym.right + 1) 
-                    + " Columna:" 
-                    + (sym.left + 1) 
                     + " Error:\"" 
                     + sym.value + "\"");
                 this.displayOutput.setForeground(Color.red);
