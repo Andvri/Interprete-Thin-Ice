@@ -206,6 +206,7 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         int tmp = j;
         j = i;
         i = tmp;
+        boolean finJuego = mapaLogico[i][j] == 4;
         mapaLogico[i][j] = value;
         ImageIcon ii;
         JLabel imagenInterna = (JLabel) mapaGrafico[i][j].getComponent(0);
@@ -225,6 +226,10 @@ public class ContenedorJuego extends JPanel  implements Constantes{
                     case 5: {
                         
                         imagenInterna.setIcon(new ImageIcon(this.imageJugador));
+                        if (finJuego) {
+                            JOptionPane.showMessageDialog(this,"FIN DEL JUEGO");
+
+                        }
                         break;
                     }
                     case 0: {

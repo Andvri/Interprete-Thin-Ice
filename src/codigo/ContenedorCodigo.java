@@ -42,11 +42,17 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
         this.displayInput = new JTextArea();
         this.displayInput.setText(
             "programa() {\n" +
-            "    entero a\n" +
-            "    mirarDerecha()\n" +
-            "    para(a := 0; a := a +1; a < 10) {\n" +
-            "        avanzar(a)\n" +
-            "    }\n" +
+                "    entero a\n" +
+                "    mirarDerecha()\n" +
+                "    para(a := 7; a := a +1; a < 10) {\n" +
+                "        avanzar(a)\n" +
+                "    }\n" +
+                "    mirarAbajo()\n" +
+                "    avanzar(1)\n" +
+                "    mirarDerecha()\n" +
+                "    avanzar(7 mod 5)\n" +
+                "    mirarArriba()\n" +
+                "    avanzar(3*2)\n" +
             "}"
         );
         
