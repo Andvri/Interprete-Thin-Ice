@@ -10,6 +10,7 @@ import arbol.*;
 import java.io.StringReader;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java_cup.runtime.Symbol;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -126,6 +127,10 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
                 GenerarCodigo gc = new GenerarCodigo();
                 gc.generarSalida(raiz, ts);
                 this.displayOutput.setText(gc.getImprimir());
+                this.displayOutput.setForeground(Color.black);
+            }
+            else{
+                semantic.imprimir(this.displayOutput);
             }
 
         } catch (Exception ex) {
@@ -137,6 +142,22 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
                 } catch (Exception ex1) {
 
                 }
+            }
+            
+            Symbol sym = s.getS();
+            if (this.displayOutput != null) {
+                try {
+                this.displayOutput.setText("Error de Sintaxis. Linea: " 
+                    + (sym.right + 1) 
+                    + " Columna:" 
+                    + (sym.left + 1) 
+                    + " Error:\"" 
+                    + sym.value + "\"");
+                this.displayOutput.setForeground(Color.red);
+                } catch (NullPointerException npe) {
+                    System.err.println(npe.getCause() + npe.getClass().getCanonicalName());
+                }
+                
             }
         }
         
