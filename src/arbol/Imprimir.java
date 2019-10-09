@@ -99,6 +99,10 @@ public class Imprimir {
                                     if(operacion == Tokens.Division){
                                         textArea.append("/");
                                     }
+                                    
+                                    if(operacion == Tokens.Modulo){
+                                        textArea.append("mod");
+                                    }
 
                                 }
                                 else{

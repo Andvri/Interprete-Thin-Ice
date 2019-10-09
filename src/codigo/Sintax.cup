@@ -173,7 +173,7 @@ OPERACION_ARITMETICA ::= OPERACION_ARITMETICA:operI OPERADOR_SUMA:op TERM:operD 
 TERM ::= TERM:operI OPERADOR_MULT:op OPERACION_MOD:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.entero); :}
         | OPERACION_MOD:mod {: RESULT= mod; :};
 
-OPERACION_MOD ::= OPERACION_MOD:operI Modulo:op FACTOR:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.entero); :}
+OPERACION_MOD ::= OPERACION_MOD:operI Modulo:op FACTOR:operD {: RESULT= new NodoOperacion((NodoBase) operI, Tokens.Modulo, (NodoBase) operD, TiposIds.entero); :}
                 | FACTOR:fact {: RESULT= fact; :} ;
 
 OPERACION_RELACIONAL ::= OPERACION_ARITMETICA:operI  OPERADOR_RELACIONAL:op OPERACION_ARITMETICA:operD {: RESULT= new NodoOperacion((NodoBase) operI, (Tokens) op, (NodoBase) operD, TiposIds.logico); :}
