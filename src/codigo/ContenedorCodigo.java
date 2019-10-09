@@ -1,10 +1,15 @@
-package juego;
+package codigo;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
+import codigo.*;
+import arbol.*;
+import java.io.StringReader;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,14 +40,13 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
         this.displayOutput = new JTextArea(); 
         this.displayInput = new JTextArea();
         this.displayInput.setText(
-            "mirarDerecha()\n" +
-            "avanzar(7)\n" +
-            "mirarAbajo()\n" +
-            "avanzar(2)\n" +
-            "mirarIzquierda()\n" +
-            "avanzar(1)\n" +
-            "mirarArriba()\n" +
-            "avanzar(4)"
+            "programa() {\n" +
+            "    entero a\n" +
+            "    mirarDerecha()\n" +
+            "    para(a := 0; a := a +1; a < 10) {\n" +
+            "        avanzar(a)\n" +
+            "    }\n" +
+            "}"
         );
         
         JScrollPane scrollInput = new JScrollPane(this.displayInput);
@@ -104,7 +108,40 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
 
     @Override
     public void mouseClicked(MouseEvent arg0) {
-        this.displayOutput.setText(this.displayInput.getText());
+        String ST = this.displayInput.getText();
+        StringReader str = new StringReader(ST);
+        LexerCup lc = new codigo.LexerCup(str);
+        Sintax s = new Sintax(lc);
+
+        try {
+            s.parse();
+            NodoBase raiz= s.getNodoBase();
+            TablaSimbolos ts = new TablaSimbolos();
+            ts.cargar(raiz);
+            
+            Semantic semantic = new Semantic();
+            semantic.analizar(raiz, ts);
+            
+            if (semantic.sinErrores()) {
+                GenerarCodigo gc = new GenerarCodigo();
+                gc.generarSalida(raiz, ts);
+                this.displayOutput.setText(gc.getImprimir());
+            }
+
+        } catch (Exception ex) {
+            if (ex instanceof ClassCastException){
+                try {
+                    //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
+                    // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero);
+                    throw ex;
+                } catch (Exception ex1) {
+
+                }
+            }
+        }
+        
+        
+        
     }
 
     @Override
