@@ -131,7 +131,7 @@ public class GenerarCodigo {
     }
     
     public void llamarFuncion (String funcion, String parametros) {
-        this.salida.add(funcion + "(" + parametros + ")");
+        this.salida.add(funcion + "(" + (parametros == null ? "" : parametros) + ")");
     }
     
     public String generarSalida(NodoBase raiz, TablaSimbolos tablaS) {

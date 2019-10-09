@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package juego;
+package codigo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +37,7 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     private BufferedImage imageLlegada;
     
     private JTextArea outputTextArea;
-    private int x = 0;
+    private int x = 1;
     private int y = 0;
     private  JPanel [][] mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
     private int [][] mapaLogico = {
@@ -165,7 +165,8 @@ public class ContenedorJuego extends JPanel  implements Constantes{
         this.SubContenedor.repaint();
         this.mapaGrafico = null;
         this.mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
-        
+        this.x = 1;
+        this.y = 0;
         
         generarMapa();
     }

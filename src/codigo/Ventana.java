@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package juego;
+package codigo;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
@@ -32,6 +32,7 @@ public class Ventana extends JFrame implements Constantes {
         setLayout(null);
         this.cc = new ContenedorCodigo();
         this.cj = new ContenedorJuego(this.cc.getOutput());
+        
         
         this.cj.setBackground(new Color(128, 188, 252));
         this.cc.setBackground(new Color(128, 188, 252));

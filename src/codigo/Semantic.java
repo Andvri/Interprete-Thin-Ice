@@ -440,4 +440,9 @@ public class Semantic {
             txt.setForeground(Color.red);
         }
     }
+    
+    public boolean sinErrores(){
+        return this.errores.size() == 0;
+    }
+
 }
