@@ -109,7 +109,7 @@ public class FormSintax extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        txtAnalizarSem1 = new javax.swing.JTextArea();
+        txtOutputGame = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -232,9 +232,9 @@ public class FormSintax extends javax.swing.JFrame {
 
         jLabel4.setText("Tabla de Simbolos");
 
-        txtAnalizarSem1.setColumns(20);
-        txtAnalizarSem1.setRows(5);
-        jScrollPane6.setViewportView(txtAnalizarSem1);
+        txtOutputGame.setColumns(20);
+        txtOutputGame.setRows(5);
+        jScrollPane6.setViewportView(txtOutputGame);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -335,7 +335,7 @@ public class FormSintax extends javax.swing.JFrame {
             GenerarCodigo gc = new GenerarCodigo();
             gc.generarSalida(raiz, ts);
             
-            
+            txtOutputGame.setText(gc.getImprimir());
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
             if (ex instanceof ClassCastException){
@@ -562,9 +562,9 @@ public class FormSintax extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea txtAnalizarLex;
-    private javax.swing.JTextArea txtAnalizarSem1;
     private javax.swing.JTextArea txtAnalizarSin;
     private javax.swing.JTextArea txtGenerar;
+    private javax.swing.JTextArea txtOutputGame;
     private javax.swing.JTextArea txtTablaS;
     // End of variables declaration//GEN-END:variables
 }
