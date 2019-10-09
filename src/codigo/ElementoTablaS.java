@@ -13,10 +13,9 @@ public class ElementoTablaS {
     String identificador;
     TiposIds tipo;
     boolean isVector;
-    int valor;
+    String valor;
     int tamVector;
     int numSent;
-    
 
     public ElementoTablaS(String identificador){
         this.identificador = identificador;
@@ -29,6 +28,7 @@ public class ElementoTablaS {
         this.tipo = tipo;
         this.isVector = false;
         this.numSent = numSent;
+        this.valor = (TiposIds.entero == tipo) ? "0" : "false";
     }
 
     public ElementoTablaS(String identificador, TiposIds tipo, int numSent, boolean isVector){
@@ -36,6 +36,7 @@ public class ElementoTablaS {
         this.tipo = tipo;
         this.isVector = isVector;
         this.numSent = numSent;
+        this.valor = (TiposIds.entero == tipo) ? "0" : "false";
     }
     
     public String getIdentificador(){
@@ -46,14 +47,35 @@ public class ElementoTablaS {
         this.identificador = identificador;
     }
 
-    public int getValor() {
+    public String getValor() {
         return valor;
     }
-
-    public void setValor(int valor) {
-        this.valor = valor;
+    
+    public String getValorVector( String posicion) {
+        String[] valueTmp = this.valor.split(",");
+        return valueTmp[Integer.parseInt(posicion)];
     }
 
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+    
+    public void setValor(String valor, String posicion) {
+        String[] valueTmp = this.valor.split(",");
+        valueTmp[Integer.parseInt(posicion)] = valor;
+        this.valor = String.join(",", valueTmp);
+    }
+    
+    public void inicializarValorVector(String cantidad) {
+       String[] valores = new String[Integer.parseInt(cantidad)];
+       for (int i = 0; i < valores.length; i ++) {
+           valores[i] = (TiposIds.entero == tipo) ? "0" : "false";
+       }
+       
+       this.valor = String.join(",", valores);
+       
+    }
+    
     public TiposIds getTipo() {
         return tipo;
     }

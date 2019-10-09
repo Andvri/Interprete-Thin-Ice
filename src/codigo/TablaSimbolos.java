@@ -123,4 +123,16 @@ public class TablaSimbolos {
             txt.append("id: " + i + " tipo: " + tabla.get(i).getTipo() + " isVector: " + tabla.get(i).getIsVector() + " numSent: " + tabla.get(i).getNumSent() + "\n");
         });
     }
+
+    public void editar(String identificador, String valor) {
+        ElementoTablaS e = this.buscar(identificador);
+        e.setValor(valor);    
+        tabla.replace(identificador, e);
+    }
+    
+    public void editarVector(String identificador, String valor, String posicion) {
+        ElementoTablaS e = this.buscar(identificador);
+        e.setValor(valor, posicion);
+        tabla.replace(identificador, e);
+    }
 }

@@ -93,7 +93,7 @@ public class FormSintax extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jDialog5 = new javax.swing.JDialog();
         jDialog6 = new javax.swing.JDialog();
-        analizar = new javax.swing.JButton();
+        generarSalida = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         inputText = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -103,11 +103,13 @@ public class FormSintax extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txtTablaS = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        txtAnalizarSem = new javax.swing.JTextArea();
+        txtGenerar = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtOutputGame = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -188,10 +190,10 @@ public class FormSintax extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        analizar.setText("Analizar");
-        analizar.addActionListener(new java.awt.event.ActionListener() {
+        generarSalida.setText("Generar");
+        generarSalida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                analizarActionPerformed(evt);
+                generarSalidaActionPerformed(evt);
             }
         });
 
@@ -218,9 +220,9 @@ public class FormSintax extends javax.swing.JFrame {
         txtTablaS.setRows(5);
         jScrollPane4.setViewportView(txtTablaS);
 
-        txtAnalizarSem.setColumns(20);
-        txtAnalizarSem.setRows(5);
-        jScrollPane5.setViewportView(txtAnalizarSem);
+        txtGenerar.setColumns(20);
+        txtGenerar.setRows(5);
+        jScrollPane5.setViewportView(txtGenerar);
 
         jLabel1.setText("A. Semantico");
 
@@ -230,64 +232,140 @@ public class FormSintax extends javax.swing.JFrame {
 
         jLabel4.setText("Tabla de Simbolos");
 
+        txtOutputGame.setColumns(20);
+        txtOutputGame.setRows(5);
+        jScrollPane6.setViewportView(txtOutputGame);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(generarSalida)
+                .addGap(204, 204, 204)
+                .addComponent(jLabel1)
+                .addGap(200, 200, 200)
+                .addComponent(jLabel3)
+                .addGap(113, 113, 113))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(analizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(jLabel2)
+                        .addGap(167, 167, 167)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(478, 478, 478)
-                .addComponent(jLabel1)
-                .addGap(190, 190, 190)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(98, 98, 98))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(analizar)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(29, 29, 29)
+                        .addComponent(generarSalida))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4))
+                        .addGap(0, 18, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
-        analizar();
-    }//GEN-LAST:event_analizarActionPerformed
+    private void generarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarSalidaActionPerformed
+        System.out.println("Entre");
+        String ST = inputText.getText();
+        StringReader str = new StringReader(ST);
+        LexerCup lc = new codigo.LexerCup(str);
+        Sintax s = new Sintax(lc);
+
+        try {
+            s.parse();
+            txtAnalizarSin.append("Analisis Realizado con Exito");
+            txtAnalizarSin.append("\n \n AST \n");
+            
+            NodoBase raiz= s.getNodoBase();
+            Imprimir.imprimir(raiz, txtAnalizarSin);
+
+            txtTablaS.setText("");
+            TablaSimbolos ts = new TablaSimbolos();
+            ts.cargar(raiz);
+            ts.imprimir(txtTablaS);
+            
+            Semantic semantic = new Semantic();
+            semantic.analizar(raiz, ts);
+            semantic.imprimir(txtGenerar);
+            
+            GenerarCodigo gc = new GenerarCodigo();
+            gc.generarSalida(raiz, ts);
+            
+            txtOutputGame.setText(gc.getImprimir());
+            txtAnalizarSin.setForeground(new Color(25, 111, 61));
+        } catch (Exception ex) {
+            if (ex instanceof ClassCastException){
+                try {
+                    //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
+                    // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero);
+                    throw ex;
+                } catch (Exception ex1) {
+                    Logger.getLogger(FormSintax.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
+            Symbol sym = s.getS();
+            txtTablaS.setText("");
+            txtGenerar.setText("");
+            if (txtAnalizarSin != null) {
+                try {
+                txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
+                    + (sym.right + 1) 
+                    + " Columna:" 
+                    + (sym.left + 1) 
+                    + " Error:\"" 
+                    + sym.value + "\"");
+                txtAnalizarSin.setForeground(Color.red);
+                } catch (NullPointerException npe) {
+                    System.err.println(npe.getCause() + npe.getClass().getCanonicalName());
+                }
+                
+            }
+        }
+    }//GEN-LAST:event_generarSalidaActionPerformed
 
     public void analizar() {
         try {
@@ -361,21 +439,20 @@ public class FormSintax extends javax.swing.JFrame {
             
             Semantic semantic = new Semantic();
             semantic.analizar(raiz, ts);
-            semantic.imprimir(txtAnalizarSem);
+            semantic.imprimir(txtGenerar);
             
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
             if (ex instanceof ClassCastException){
-                //case 44: // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR line 525
+                //SINTAX.java // OPERACION_MOD ::= OPERACION_MOD Modulo FACTOR 
                 // replace  par RESULT= new NodoOperacion((NodoBase) operI, (Tokens) Tokens.Modulo, (NodoBase) operD, TiposIds.entero); 
                 throw ex;
             }
             Symbol sym = s.getS();
             txtTablaS.setText("");
-            txtAnalizarSem.setText("");
+            txtGenerar.setText("");
             if (txtAnalizarSin != null) {
                 try {
-                   System.out.println(txtAnalizarSin.toString());
                 txtAnalizarSin.setText("Error de Sintaxis. Linea: " 
                     + (sym.right + 1) 
                     + " Columna:" 
@@ -465,7 +542,7 @@ public class FormSintax extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton analizar;
+    private javax.swing.JButton generarSalida;
     private javax.swing.JTextArea inputText;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -483,9 +560,11 @@ public class FormSintax extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea txtAnalizarLex;
-    private javax.swing.JTextArea txtAnalizarSem;
     private javax.swing.JTextArea txtAnalizarSin;
+    private javax.swing.JTextArea txtGenerar;
+    private javax.swing.JTextArea txtOutputGame;
     private javax.swing.JTextArea txtTablaS;
     // End of variables declaration//GEN-END:variables
 }
