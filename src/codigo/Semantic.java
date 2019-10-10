@@ -252,8 +252,10 @@ public class Semantic {
                                             else{
                                                 if(nodo.getOpD() instanceof NodoIdentificador){
                                                     ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpD()).getIdentificador());
-                                                    if(elemId.getTipo() != TiposIds.entero){
-                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                    if (elemId != null && elemId.getNumSent() <= numSent) {
+                                                        if(elemId.getTipo() != TiposIds.entero){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                        }
                                                     }
                                                 }
                                                 else{
@@ -271,9 +273,11 @@ public class Semantic {
                                             else{
                                                 if(nodo.getOpI() instanceof NodoIdentificador){
                                                     ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpI()).getIdentificador());
-                                                    if(elemId.getTipo() != TiposIds.entero){
-                                                        errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
-                                                    }
+                                                    if (elemId != null && elemId.getNumSent() <= numSent) {
+                                                        if(elemId.getTipo() != TiposIds.entero){
+                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo entero.\n");
+                                                        }
+                                                    }       
                                                 }
                                                 else{
                                                     if(nodo.getOpI() instanceof NodoBooleano){
@@ -293,8 +297,10 @@ public class Semantic {
                                                 else{
                                                     if(nodo.getOpD() instanceof NodoIdentificador){
                                                         ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpD()).getIdentificador());
-                                                        if(elemId.getTipo() != TiposIds.logico){
-                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        if (elemId != null && elemId.getNumSent() <= numSent) {
+                                                            if(elemId.getTipo() != TiposIds.logico){
+                                                                errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                            }
                                                         }
                                                     }
                                                     else{
@@ -312,8 +318,10 @@ public class Semantic {
                                                 else{
                                                     if(nodo.getOpI() instanceof NodoIdentificador){
                                                         ElementoTablaS elemId = tablaS.buscar(((NodoIdentificador)nodo.getOpI()).getIdentificador());
-                                                        if(elemId.getTipo() != TiposIds.logico){
-                                                            errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                        if (elemId != null && elemId.getNumSent() <= numSent) {
+                                                            if(elemId.getTipo() != TiposIds.logico){
+                                                                errores.add("Los operadores  de la operacion " + nodo.getOperacion().toString().toLowerCase() + " deben ser de tipo logico.\n");
+                                                            }
                                                         }
                                                     }
                                                     else{
