@@ -43,6 +43,7 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
         this.displayInput.setText(
             "programa() {\n" +
                 "    entero a\n" +
+                "    entero x\n" +
                 "    mirarDerecha()\n" +
                 "    para(a := 7; a := a +1; a < 10) {\n" +
                 "        avanzar(a)\n" +
@@ -53,6 +54,10 @@ public class ContenedorCodigo extends JPanel implements Constantes, MouseListene
                 "    avanzar(7 mod 5)\n" +
                 "    mirarArriba()\n" +
                 "    avanzar(3*2)\n" +
+                "    repita\n" +
+                "       avanzar(x)\n" +
+                "       x := (x + 1)\n" +
+                "    hasta que x = 5;\n" +
             "}"
         );
         

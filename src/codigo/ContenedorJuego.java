@@ -35,28 +35,28 @@ public class ContenedorJuego extends JPanel  implements Constantes{
     private BufferedImage imageAgua;
     private BufferedImage imageHielo;
     private BufferedImage imageLlegada;
+    private BufferedImage imageHieloDoble;
     
     private JTextArea outputTextArea;
     private int x = 1;
     private int y = 0;
     private  JPanel [][] mapaGrafico = new JPanel[FILAS_JUEGO][COLUMNAS_JUEGO];
     private int [][] mapaLogico = {
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -1, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1,  4, -1, -2, -2, -2},
-        {-2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  1, -1, -1, -1, -2},
-        {-2, -1, -1, -1, -1,  1,  1,  1,  1,  1,  1,  1,  1, -1,  1,  1,  1, -1, -2},
-        {-2, -1,  5,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1,  1,  1,  1, -1, -2},
-        {-2, -1, -1, -1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -2},
-        {-2, -2, -2, -1, -1, -1, -1,  1,  1,  1, -1, -1, -1, -1, -1, -1, -1, -1, -2},
-        {-2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2},
-        {-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2}
+{-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+{-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+{-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2},
+{-1, -1, -1, -1, -1, -2, -2, -2, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2},
+{-1,  1,  1,  1, -1, -1, -1, -1, -1,  1,  1,  1, -1, -2, -2, -2, -2, -2, -2},
+{-1,  1, -1,  1, -1, -1,  5, -1, -1,  1, -1,  1, -1, -2, -2, -2, -2, -2, -2},
+{-1,  1,  1,  2,  1,  1,  2,  1,  1,  2,  1,  1, -1, -1, -1, -1, -2, -2, -2},
+{-1, -1, -1,  1, -1, -1,  1, -1, -1,  1, -1, -1, -1, -1,  4, -1, -2, -2, -2},
+{-2, -1, -1,  1, -1, -1,  1, -1, -1,  1, -1, -1, -1, -1,  1, -1, -1, -2, -2},
+{-2, -1,  1,  1,  1,  1,  2,  1,  1,  2,  1,  1, -1, -1,  1, -1, -1, -2, -2},
+{-2, -1,  1,  1,  1, -1,  1, -1, -1,  1, -1,  1, -1,  1,  1,  1, -1, -2, -2},
+{-2, -1,  1,  1,  1,  1,  1, -1, -1,  1,  1,  1, -1,  1, -1, -1, -1, -2, -2},
+{-2, -1,  1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  1,  1,  1, -1, -2, -2},
+{-2, -1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1, -2, -2},
+{-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2}
     }; 
     
     
@@ -120,6 +120,7 @@ public class ContenedorJuego extends JPanel  implements Constantes{
             this.imageJugador = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-player.png"));
             this.imageAgua = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-agua.png"));
             this.imageHielo = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-hielo.png"));
+            this.imageHieloDoble = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-hielo-doble.png"));
             this.imageLlegada = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-llegada.png"));
             this.imageMuro = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-muro.png"));
             this.imageInactivo = ImageIO.read(ContenedorJuego.class.getResource("/recursos/imagenes/bloque-inactivo.png"));
@@ -223,6 +224,10 @@ public class ContenedorJuego extends JPanel  implements Constantes{
                         imagenInterna.setIcon(new ImageIcon(this.imageHielo));
                         break;
                     }
+                    case 2: {
+                        imagenInterna.setIcon(new ImageIcon(this.imageHieloDoble));
+                        break;
+                    }
                     case 5: {
                         
                         imagenInterna.setIcon(new ImageIcon(this.imageJugador));
@@ -306,6 +311,11 @@ public class ContenedorJuego extends JPanel  implements Constantes{
                     case 1: {
                         p = Color.red;
                         ii = new ImageIcon(this.imageHielo);
+                        break;
+                    }
+                    case 2: {
+                        p = Color.red;
+                        ii = new ImageIcon(this.imageHieloDoble);
                         break;
                     }
                     case 5: {
